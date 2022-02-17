@@ -1,2 +1,2 @@
-# ospixel
+# OSPixel
 OS for Computercraft
