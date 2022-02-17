@@ -9,8 +9,8 @@ term.setBackgroundColor(colors.black)
 term.setCursorPos(23,13)
 print("OSPixel")
 if isUnlocked == "1" then
-	term.setCursorPos(21,15)
-	print("Unlocked")
+	term.setCursorPos(22,15)
+	print("Unlocked!")
 end
 _G['fs']['open'] = function(path,dest)
    if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
