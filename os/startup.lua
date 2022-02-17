@@ -2,13 +2,14 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
+local isUnclocked = fs.open("/.startupSettings/isUnlocked","r").readAll()
 term.clear()
 paintutils.drawImage(paintutils.loadImage("/ospixel/logo.nfp"),23,5)
 term.setBackgroundColor(colors.black)
 term.setCursorPos(23,13)
 print("OSPixel")
 _G['fs']['open'] = function(path,dest)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == 0 then
         error("Access denied",0)
         return nil
    else
@@ -16,7 +17,7 @@ _G['fs']['open'] = function(path,dest)
    end
 end
 _G['fs']['move'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == 0 then
         error("Access denied",0)
         return nil
    else
