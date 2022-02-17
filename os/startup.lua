@@ -9,7 +9,7 @@ term.setBackgroundColor(colors.black)
 term.setCursorPos(23,13)
 print("OSPixel")
 _G['fs']['open'] = function(path,dest)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == 0 then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
         error("Access denied",0)
         return nil
    else
@@ -17,7 +17,7 @@ _G['fs']['open'] = function(path,dest)
    end
 end
 _G['fs']['move'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == 0 then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
         error("Access denied",0)
         return nil
    else
@@ -25,7 +25,7 @@ _G['fs']['move'] = function(path,mode)
    end
 end
 _G['fs']['copy'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
         error("Access denied",0)
         return nil
    else
@@ -33,7 +33,7 @@ _G['fs']['copy'] = function(path,mode)
    end
 end
 _G['fs']['delete'] = function(path)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
         error("Access denied",0)
         return nil
    else
