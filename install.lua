@@ -1,9 +1,9 @@
 local filesToDownload = {"startup.lua","ospixel/logo.nfp","ospixel/system/init"}
 function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ospixel/1.0.0/os/"..filename)
-	fs.open("/"..filename,"w")
-	fs.write(req.readAll())
-	fs.close()
+	local file = fs.open("/"..filename,"w")
+	file.write(req.readAll())
+	file.close()
 end
 term.setBackgroundColor(colors.white)
 term.setTextColor(term.gray)
