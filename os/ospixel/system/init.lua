@@ -11,6 +11,9 @@ if not fs.exists("/ospixel/system/.registry") then
 	term.write("Username: ")
 	local user = read()
 	registry.createKey("user","username",user)
+	fs.makeDir("/ospixel/user")
+	fs.makeDir("/ospixel/user/"..user)
+	fs.makeDir("/ospixel/user/"..user.."/apps")
 	shell.run("pkg","install","gui","/ospixel/system/apps/gui")
 end
 shell.run("/ospixel/system/apps/gui/main.lua")
