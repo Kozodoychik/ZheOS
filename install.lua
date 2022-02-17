@@ -11,7 +11,7 @@ term.clear()
 term.setCursorPos(5,10)
 term.write("OSPixel v1.0.0 Setup")
 term.setCursorPos(5,12)
-while key, value in ipairs(filesToDownload) do
+for key, value in ipairs(filesToDownload) do
 	term.clearLine()
 	term.write("Installing: "..value)
 	download(value)
