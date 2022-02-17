@@ -1,0 +1,7 @@
+term.clear()
+paintutils.drawImage(paintutils.loadImage("/ospixel/logo.nfp"),23,5)
+term.setBackgroundColor(colors.black)
+term.setCursorPos(23,13)
+print("OSPixel")
+os.sleep(3)
+shell.run("/ospixel/system/init.lua")
