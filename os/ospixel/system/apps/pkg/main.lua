@@ -1,7 +1,9 @@
 os.loadAPI("/ospixel/system/apis/registry.lua")
 local args = {...}
 if args[1] == "install" then
-    print("Installing package: "..args[2])
+    if not args[4] == "silent" then
+    	print("Installing package: "..args[2])
+    end
     local req = http.get("http://kotetube.7m.pl/ospixel/pkgs/"..args[2].."/filesToDownload")
     local files = req.readAll()
 	for value in string.gmatch(files, "%S+") do
@@ -19,8 +21,12 @@ if args[1] == "install" then
     	    file.close()
         end
     end
-    print("Done!")
+    if not args[4] == "silent" then
+    	print("Done!")
+    end
 elseif args[1] == "uninstall" then
-    print("Deleting package: "..args[2])
+    if not args[3] == "silent" then
+    	print("Deleting package: "..args[2])
+    end
     fs.delete("/ospixel/user/"..registry.readKey("user","username").."/apps/"..args[3])
 end
