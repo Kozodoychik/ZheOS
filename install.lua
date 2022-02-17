@@ -19,6 +19,8 @@ for key, value in ipairs(filesToDownload) do
 end
 term.clearLine()
 term.setCursorPos(15,10)
-term.write("Done! Press any key to reboot")
+term.write("Installing some packages...")
+shell.setAlias("pkg","/ospixel/system/apps/pkg/main.lua")
+shell.run("pkg","install","recovery","/ospixel/recovery","silent")
 os.pullEvent("key")
 os.reboot()
