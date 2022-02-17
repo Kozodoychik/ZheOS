@@ -13,6 +13,7 @@ term.write("OSPixel v1.0.0 Setup")
 term.setCursorPos(15,10)
 for key, value in ipairs(filesToDownload) do
 	term.clearLine()
+	term.setCursorPos(15,10)
 	term.write("Installing: "..value)
 	download(value)
 end
