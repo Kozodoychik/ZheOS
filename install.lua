@@ -6,7 +6,7 @@ function download(filename)
 	file.close()
 end
 term.setBackgroundColor(colors.white)
-term.setTextColor(term.gray)
+term.setTextColor(colors.gray)
 term.clear()
 term.setCursorPos(5,10)
 term.write("OSPixel v1.0.0 Setup")
