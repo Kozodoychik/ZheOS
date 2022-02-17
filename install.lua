@@ -1,4 +1,4 @@
-local filesToDownload = {"startup.lua","ospixel/logo.nfp","ospixel/system/init.lua"}
+local filesToDownload = {"startup.lua","ospixel/logo.nfp","ospixel/system/init.lua","ospixel/system/apis/registry.lua","ospixel/system/apps/pkg/main.lua"}
 function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ospixel/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")
