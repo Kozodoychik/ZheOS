@@ -18,6 +18,7 @@ for key, value in ipairs(filesToDownload) do
 	download(value)
 end
 term.clearLine()
+term.setCursorPos(15,10)
 term.write("Done! Press any key to reboot")
 os.pullEvent("key")
 os.reboot()
