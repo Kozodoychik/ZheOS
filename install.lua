@@ -8,9 +8,9 @@ end
 term.setBackgroundColor(1)
 term.setTextColor(128)
 term.clear()
-term.setCursorPos(5,10)
+term.setCursorPos(15,8)
 term.write("OSPixel v1.0.0 Setup")
-term.setCursorPos(5,12)
+term.setCursorPos(15,10)
 for key, value in ipairs(filesToDownload) do
 	term.clearLine()
 	term.write("Installing: "..value)
