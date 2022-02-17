@@ -3,6 +3,7 @@ term.setBackgroundColor(colors.black)
 term.setTextColor(colors.white)
 term.clear()
 term.setCursorPos(1,1)
+shell.setAlias("pkg","/ospixel/system/apps/pkg/main.lua")
 if not fs.exists("/ospixel/system/.registry") then
 	fs.makeDir("/ospixel/system/.registry")
 	registry.createReg()
@@ -10,5 +11,6 @@ if not fs.exists("/ospixel/system/.registry") then
 	term.write("Username: ")
 	local user = read()
 	registry.createKey("user","username",user)
+	shell.run("pkg","install","gui","/ospixel/system/apps/gui")
 end
 shell.run("/ospixel/system/apps/gui/main.lua")
