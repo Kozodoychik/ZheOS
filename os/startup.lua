@@ -2,7 +2,7 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
-local isUnclocked = fs.open("/.startupSettings/isUnlocked","r").readAll()
+local isUnlocked = fs.open("/.startupSettings/isUnlocked","r").readAll()
 term.clear()
 paintutils.drawImage(paintutils.loadImage("/ospixel/logo.nfp"),23,5)
 term.setBackgroundColor(colors.black)
