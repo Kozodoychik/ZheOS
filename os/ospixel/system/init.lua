@@ -10,7 +10,7 @@ if not fs.exists("/ospixel/system/.registry") then
 	registry.createKey("system","systemVersion","1.0.0")
 	term.write("Username: ")
 	local user = read()
-	term.write("New password: ")
+	term.write("Password: ")
 	local passw = read()
 	registry.createKey("user","username",user)
 	fs.makeDir("/ospixel/user")
