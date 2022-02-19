@@ -1,4 +1,4 @@
-regpath = 'ospixel/system/.registry'
+regpath = '/gkos/system/.registry'
 function createReg()
     fs.makeDir(regpath)
     fs.makeDir(regpath..'/system')

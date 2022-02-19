@@ -1,6 +1,6 @@
-local filesToDownload = {"startup.lua","ospixel/logo.nfp","ospixel/system/init.lua","ospixel/system/apis/registry.lua","ospixel/system/apps/pkg/main.lua"}
+local filesToDownload = {"startup.lua","gkos/logo.nfp","gkos/system/init.lua","gkos/system/apis/registry.lua","gkos/system/apps/pkg/main.lua"}
 function download(filename)
-	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ospixel/1.0.0/os/"..filename)
+	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/GK-OS/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")
 	file.write(req.readAll())
 	file.close()
@@ -8,8 +8,8 @@ end
 term.setBackgroundColor(1)
 term.setTextColor(128)
 term.clear()
-term.setCursorPos(15,8)
-term.write("OSPixel v1.0.0 Setup")
+term.setCursorPos(18,8)
+term.write("GK-OS v1.0.0 Setup")
 term.setCursorPos(15,10)
 for key, value in ipairs(filesToDownload) do
 	term.clearLine()
