@@ -1,2 +1,2 @@
-# OSPixel
+# GK-OS
 OS for Computercraft
