@@ -6,7 +6,7 @@ local isUnlocked = fs.open("/.startupSettings/isUnlocked","r").readAll()
 term.clear()
 paintutils.drawImage(paintutils.loadImage("/gkos/logo.nfp"),23,5)
 term.setBackgroundColor(colors.black)
-term.setCursorPos(25,13)
+term.setCursorPos(24,13)
 print("GK-OS")
 if isUnlocked == "1" then
 	term.setCursorPos(22,15)
