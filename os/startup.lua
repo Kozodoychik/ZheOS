@@ -4,10 +4,10 @@ local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
 local isUnlocked = fs.open("/.startupSettings/isUnlocked","r").readAll()
 term.clear()
-paintutils.drawImage(paintutils.loadImage("/ospixel/logo.nfp"),23,5)
+paintutils.drawImage(paintutils.loadImage("/gkos/logo.nfp"),23,5)
 term.setBackgroundColor(colors.black)
-term.setCursorPos(23,13)
-print("OSPixel")
+term.setCursorPos(25,13)
+print("GK-OS")
 if isUnlocked == "1" then
 	term.setCursorPos(22,15)
 	print("Unlocked!")
@@ -57,13 +57,13 @@ function waitForKey()
         local event, pressed = os.pullEvent("key")
         if pressed == keys.leftShift then
             inRecovery = true
-            shell.run("/ospixel/recovery/main.lua")
+            shell.run("/gkos/recovery/main.lua")
         end
     end
 end
 function init()
     parallel.waitForAny(wait,waitForKey)
-    shell.run("/ospixel/system/init.lua")
+    shell.run("/gkos/system/init.lua")
 end
 local ok = pcall(init)
 if not ok then
