@@ -2,18 +2,18 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
-local isUnlocked = fs.open("/.startupSettings/isUnlocked","r").readAll()
+local isUnlocked = settings.get("gkstartup.isUnlocked")
 term.clear()
 paintutils.drawImage(paintutils.loadImage("/gkos/logo.nfp"),23,5)
 term.setBackgroundColor(colors.black)
 term.setCursorPos(24,13)
 print("GK-OS")
-if isUnlocked == "1" then
+if isUnlocked == true then
 	term.setCursorPos(22,15)
 	print("Unlocked!")
 end
 _G['fs']['open'] = function(path,dest)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
         error("Access denied",0)
         return nil
    else
@@ -21,7 +21,7 @@ _G['fs']['open'] = function(path,dest)
    end
 end
 _G['fs']['move'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
         error("Access denied",0)
         return nil
    else
@@ -29,7 +29,7 @@ _G['fs']['move'] = function(path,mode)
    end
 end
 _G['fs']['copy'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
         error("Access denied",0)
         return nil
    else
@@ -37,7 +37,7 @@ _G['fs']['copy'] = function(path,mode)
    end
 end
 _G['fs']['delete'] = function(path)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == "0" then
+   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
         error("Access denied",0)
         return nil
    else
