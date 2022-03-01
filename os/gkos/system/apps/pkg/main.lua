@@ -4,9 +4,9 @@ if args[1] == "install" then
     if args[4] ~= "silent" then
     	print("Installing package: "..args[2])
     end
-    local req = http.get("http://kotetube.7m.pl/gkos/pkgs/"..args[2].."/filesToDownload")
-    local files = req.readAll()
-	for value in string.gmatch(files, "%S+") do
+    local req = http.get("http://kotetube.7m.pl/gkos/pkgs/"..args[2].."/info.cfg")
+    local files = textutils.unserialise(req.readAll()).files
+	for key, value in files do
     	local text = http.get("http://kotetube.7m.pl/gkos/pkgs/"..args[2].."/"..value)
         if args[3] == nil then
             fs.makeDir('/gkos/system/apps/pkg')
