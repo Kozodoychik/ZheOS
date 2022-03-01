@@ -6,7 +6,7 @@ if args[1] == "install" then
     end
     local req = http.get("http://kotetube.7m.pl/gkos/pkgs/"..args[2].."/info.cfg")
     local files = textutils.unserialise(req.readAll()).files
-	for key, value in files do
+	for key, value in ipairs(files) do
     	local text = http.get("http://kotetube.7m.pl/gkos/pkgs/"..args[2].."/"..value)
         if args[3] == nil then
             fs.makeDir('/gkos/system/apps/pkg')
