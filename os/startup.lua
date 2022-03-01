@@ -2,6 +2,7 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
+settings.load("/.systemSettings")
 local isUnlocked = settings.get("gkstartup.isUnlocked")
 term.clear()
 paintutils.drawImage(paintutils.loadImage("/gkos/logo.nfp"),23,5)
