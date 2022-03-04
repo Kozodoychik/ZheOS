@@ -65,7 +65,7 @@ function waitForKey()
 end
 function init()
     parallel.waitForAny(wait,waitForKey)
-    shell.run(config.loadPath[config.default])
+    shell.run(config.loadPaths[config.default])
 end
 local ok = pcall(init)
 if not ok then
