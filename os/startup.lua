@@ -2,6 +2,7 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
+local config = textutils.unserialize(fs.open("/gkstartup.cfg","r").readAll())
 settings.load("/.systemSettings")
 local isUnlocked = settings.get("gkstartup.isUnlocked")
 term.clear()
@@ -64,7 +65,7 @@ function waitForKey()
 end
 function init()
     parallel.waitForAny(wait,waitForKey)
-    shell.run("/gkos/system/init.lua")
+    shell.run(config.loadPath[config.default])
 end
 local ok = pcall(init)
 if not ok then
