@@ -58,7 +58,7 @@ local function waitForKey()
     while true do
         local event, pressed = os.pullEvent("key")
         if pressed == keys.leftShift then
-            inRecovery = true
+            inBootMenu = true
             bootMenu()
         end
     end
