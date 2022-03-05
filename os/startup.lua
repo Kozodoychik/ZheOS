@@ -69,7 +69,7 @@ function bootMenu()
     shell.run(config.loadPaths[bootTo])
 end
 function wait()
-    while i<100 or not inBootMenu do
+    while i<100 or inBootMenu do
         i = i + 1
         os.sleep(0.01)
     end
