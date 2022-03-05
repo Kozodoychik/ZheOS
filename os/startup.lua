@@ -64,7 +64,7 @@ local function waitForKey()
     end
 end
 local function init()
-    prallel.waitForAny(wait,waitForKey)
+    parallel.waitForAny(wait,waitForKey)
     shell.run(config.loadPaths[config.default])
 end
 local function bootMenu()
