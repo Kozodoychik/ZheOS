@@ -46,26 +46,47 @@ _G['fs']['delete'] = function(path)
         return fsDelete(path)
    end
 end
-local inRecovery = false
+local inBootMenu = false
 local i = 0
 function wait()
-    while i<100 or inRecovery do
+    while i<100 or inBootMenu do
         i = i + 1
         os.sleep(0.05)
     end
 end
-function waitForKey()
+local function waitForKey()
     while true do
         local event, pressed = os.pullEvent("key")
         if pressed == keys.leftShift then
             inRecovery = true
-            shell.run("/gkos/recovery/main.lua")
+            bootMenu()
         end
     end
 end
-function init()
-    parallel.waitForAny(wait,waitForKey)
+local function init()
+    prallel.waitForAny(wait,waitForKey)
     shell.run(config.loadPaths[config.default])
+end
+local function bootMenu()
+    local bootTo = 0
+    term.clear()
+    term.setCursorPos(1,1)
+    print("GK-OS boot menu\n")
+    for key, value in pairs(config.labels) do
+    	print(key.." "..value.." ("..config.loadPaths[key]..")")
+    end
+    while true do
+	term.setCursorPos(1,3)
+	term.write("Boot: ")
+	bootTo = tonumber(read())
+	term.clearLine()
+	if config.loadPaths[bootTo] ~= nil then
+            break
+	end
+    end
+    term.clear()
+    term.setCursorPos(1,1)
+    shell.run(config.loadPaths[bootTo])
 end
 local ok = pcall(init)
 if not ok then
