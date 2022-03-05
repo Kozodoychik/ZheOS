@@ -48,8 +48,28 @@ _G['fs']['delete'] = function(path)
 end
 local inBootMenu = false
 local i = 0
+function bootMenu()
+    local bootTo = 0
+    term.clear()
+    term.setCursorPos(1,1)
+    print("GK-OS boot menu\n")
+    for key, value in pairs(config.labels) do
+    	print(key.." "..value.." ("..config.loadPaths[key]..")")
+    end
+    while true do
+	term.write("Boot: ")
+	bootTo = tonumber(read())
+	term.clearLine()
+	if config.loadPaths[bootTo] ~= nil then
+            break
+	end
+    end
+    term.clear()
+    term.setCursorPos(1,1)
+    shell.run(config.loadPaths[bootTo])
+end
 function wait()
-    while i<100 or inBootMenu do
+    while i<100 or not inBootMenu do
         i = i + 1
         os.sleep(0.05)
     end
@@ -66,27 +86,6 @@ end
 local function init()
     parallel.waitForAny(wait,waitForKey)
     shell.run(config.loadPaths[config.default])
-end
-local function bootMenu()
-    local bootTo = 0
-    term.clear()
-    term.setCursorPos(1,1)
-    print("GK-OS boot menu\n")
-    for key, value in pairs(config.labels) do
-    	print(key.." "..value.." ("..config.loadPaths[key]..")")
-    end
-    while true do
-	term.setCursorPos(1,3)
-	term.write("Boot: ")
-	bootTo = tonumber(read())
-	term.clearLine()
-	if config.loadPaths[bootTo] ~= nil then
-            break
-	end
-    end
-    term.clear()
-    term.setCursorPos(1,1)
-    shell.run(config.loadPaths[bootTo])
 end
 local ok = pcall(init)
 if not ok then
