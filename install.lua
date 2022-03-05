@@ -28,7 +28,7 @@ fs.delete("/.temp")
 term.clearLine()
 term.setCursorPos(15,10)
 term.write("Creating startup config...")
-local cfg = {default=1,loadPaths={"/gkos/system/init.lua","/gkos/recovery/main.lua","/rom/startup.lua"},labels={"GK-OS Init","Recovery","CraftOS"}}
+local cfg = {default=1,loadPaths={"/gkos/system/init.lua","/gkos/recovery/main.lua","/rom/programs/shell.lua"},labels={"GK-OS Init","Recovery","CraftOS"}}
 local cfgFile = fs.open("/gkstartup.cfg","w")
 cfgFile.write(textutils.serialize(cfg))
 cfgFile.close()
