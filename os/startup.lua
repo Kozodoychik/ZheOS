@@ -73,6 +73,7 @@ function wait()
         i = i + 1
         os.sleep(0.01)
     end
+    while inBootMenu do os.sleep(0) end
 end
 local function waitForKey()
     while true do
