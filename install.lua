@@ -1,4 +1,4 @@
-local filesToDownload = {"startup.lua","gkos/logo.nfp","gkos/system/init.lua","gkos/system/apis/registry.lua","gkos/system/apps/pkg/main.lua"}
+local filesToDownload = {"startup.lua","gkos/system/init.lua","gkos/system/apis/registry.lua","gkos/system/apps/pkg/main.lua"}
 function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/GK-OS/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")

@@ -8,10 +8,10 @@ local isUnlocked = settings.get("gkstartup.isUnlocked")
 term.clear()
 paintutils.drawImage(paintutils.loadImage("/gkos/logo.nfp"),23,5)
 term.setBackgroundColor(colors.black)
-term.setCursorPos(24,13)
+term.setCursorPos(24,9)
 print("GK-OS")
 if isUnlocked == true then
-	term.setCursorPos(22,15)
+	term.setCursorPos(22,11)
 	print("Unlocked!")
 end
 _G['fs']['open'] = function(path,dest)
