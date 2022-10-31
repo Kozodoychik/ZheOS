@@ -1,4 +1,4 @@
-local filesToDownload = {"startup.lua","gkos/system/init.lua","gkos/system/apis/registry.lua","gkos/system/apps/pkg/main.lua"}
+local filesToDownload = {"startup.lua","zheos/system/init.lua","zheos/system/apis/registry.lua","zheos/system/apps/pkg/main.lua"}
 function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/GK-OS/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")
@@ -9,7 +9,7 @@ term.setBackgroundColor(1)
 term.setTextColor(128)
 term.clear()
 term.setCursorPos(18,8)
-term.write("GK-OS v1.0.0 Setup")
+term.write("ZheOS v1.0.0 Setup")
 term.setCursorPos(15,10)
 for key, value in ipairs(filesToDownload) do
 	term.clearLine()
@@ -20,16 +20,16 @@ end
 term.clearLine()
 term.setCursorPos(15,10)
 term.write("Installing some packages...")
-shell.setAlias("pkg","/gkos/system/apps/pkg/main.lua")
-shell.run("pkg","install","recovery","/gkos/recovery","silent")
-settings.set("gkstartup.isUnlocked",false)
+shell.setAlias("pkg","/zheos/system/apps/pkg/main.lua")
+shell.run("pkg","install","recovery","/zheos/recovery","silent")
+settings.set("zhestartup.isUnlocked",false)
 settings.save("/.systemSettings")
 fs.delete("/.temp")
 term.clearLine()
 term.setCursorPos(15,10)
 term.write("Creating startup config...")
-local cfg = {default=1,loadPaths={"/gkos/system/init.lua","/gkos/recovery/main.lua","/rom/programs/shell.lua"},labels={"GK-OS Init","Recovery","CraftOS"}}
-local cfgFile = fs.open("/gkstartup.cfg","w")
+local cfg = {default=1,loadPaths={"/zheos/system/init.lua","/zheos/recovery/main.lua","/rom/programs/shell.lua"},labels={"GK-OS Init","Recovery","CraftOS"}}
+local cfgFile = fs.open("/zhestartup.cfg","w")
 cfgFile.write(textutils.serialize(cfg))
 cfgFile.close()
 term.clearLine()
