@@ -1,4 +1,4 @@
-regpath = '/gkos/system/.registry'
+regpath = _SYSPATH..'system/.registry'
 function createReg()
     fs.makeDir(regpath)
     fs.makeDir(regpath..'/system')

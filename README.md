@@ -1,2 +1,2 @@
-# GK-OS
+# ZheOS
 OS for Computercraft

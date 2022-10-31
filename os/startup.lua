@@ -2,13 +2,13 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
-local config = textutils.unserialize(fs.open("/gkstartup.cfg","r").readAll())
+local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
 settings.load("/.systemSettings")
-local isUnlocked = settings.get("gkstartup.isUnlocked")
+local isUnlocked = settings.get("zhestartup.isUnlocked")
 term.clear()
 term.setBackgroundColor(colors.black)
 term.setCursorPos(24,9)
-print("GK-OS")
+print("Welcome to ZheOS!")
 if isUnlocked == true then
 	term.setCursorPos(22,11)
 	print("Unlocked!")
@@ -51,7 +51,7 @@ function bootMenu()
     local bootTo = 0
     term.clear()
     term.setCursorPos(1,1)
-    print("GK-OS boot menu\n")
+    print("ZheOS boot menu\n")
     for key, value in pairs(config.labels) do
     	print(key.." "..value.." ("..config.loadPaths[key]..")")
     end
