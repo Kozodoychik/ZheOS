@@ -3,12 +3,13 @@ local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
+_G['_SYSPATH'] = "/zheos/"
 settings.load("/.systemSettings")
 local isUnlocked = settings.get("zhestartup.isUnlocked")
 term.clear()
 term.setBackgroundColor(colors.black)
-term.setCursorPos(24,9)
-print("Welcome to ZheOS!")
+term.setCursorPos(23,9)
+print("ZheOS")
 if isUnlocked == true then
 	term.setCursorPos(22,11)
 	print("Unlocked!")
