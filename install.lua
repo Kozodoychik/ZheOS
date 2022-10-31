@@ -1,6 +1,6 @@
 local filesToDownload = {"startup.lua","zheos/system/init.lua","zheos/system/apis/registry.lua","zheos/system/apps/pkg/main.lua"}
 function download(filename)
-	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/GK-OS/1.0.0/os/"..filename)
+	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")
 	file.write(req.readAll())
 	file.close()
