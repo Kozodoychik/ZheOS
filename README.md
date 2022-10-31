@@ -1,2 +1,2 @@
-# OSPixel
+# ZheOS
 OS for Computercraft
