@@ -87,6 +87,7 @@ end
 local function init()
     parallel.waitForAny(wait,waitForKey)
     print('booting from config.default')
+    os.sleep(0.5)
     _G['print'] = luaPrint
     shell.run(config.loadPaths[config.default])
 end
