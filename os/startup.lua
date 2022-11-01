@@ -13,6 +13,7 @@ term.setCursorPos(1,1)
 _G['print'] = function(str)
 	luaPrint("[ "..os.clock().." ] "..str)
 end
+print('rewriting fs functions')
 _G['fs']['open'] = function(path,dest)
    if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
         error("Access denied",0)
