@@ -2,17 +2,16 @@ local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
 local fsCopy = _G['fs']['copy']
+local luaPrint = _G['print']
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
 _G['_SYSPATH'] = "/zheos/"
 settings.load("/.systemSettings")
 local isUnlocked = settings.get("zhestartup.isUnlocked")
 term.clear()
 term.setBackgroundColor(colors.black)
-term.setCursorPos(23,9)
-print("ZheOS")
-if isUnlocked == true then
-	term.setCursorPos(22,11)
-	print("Unlocked!")
+term.setCursorPos(1,1)
+_G['print'] = function(str)
+	luaPrint("[ "..os.clock().." ] "..str)
 end
 _G['fs']['open'] = function(path,dest)
    if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
@@ -84,6 +83,7 @@ local function waitForKey()
         end
     end
 end
+_G['print'] = luaPrint
 local function init()
     parallel.waitForAny(wait,waitForKey)
     shell.run(config.loadPaths[config.default])
