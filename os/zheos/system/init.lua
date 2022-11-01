@@ -1,6 +1,6 @@
 os.loadAPI(_SYSPATH.."system/apis/registry.lua")
 local luaPrint = _G['print']
-_G['print'] = function(str)
+_G['print'] = function(str, ...)
 	luaPrint("[ "..os.clock().." ] "..str)
 end
 term.setBackgroundColor(colors.black)
