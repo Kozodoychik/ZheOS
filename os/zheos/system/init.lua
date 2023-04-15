@@ -5,12 +5,20 @@ _G['print'] = function(str, ...)
 		luaPrint("[ "..os.clock().." ] "..str)
 	end
 end
-local luaFileList = _G['file']['list']
+local luaFileList = _G['fs']['list']
+local luaIsDir = _G['fs']['isDir']
 _G['fs']['list'] = function(path)
-	if shell.resolve(path) == "/test" then
-		return ['test.zhe']
+	if shell.resolve(path) == "test" then
+		return {'test.zhe'}
 	else
 		return luaFileList(path)
+	end
+end
+_G['fs']['isDir'] = function(path)
+	if shell.resolve(path) == "test" then
+		return true
+	else
+		return luaIsDir(path)
 	end
 end
 term.setBackgroundColor(colors.black)
