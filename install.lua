@@ -19,7 +19,7 @@ for key, value in ipairs(filesToDownload) do
 end
 term.clearLine()
 term.setCursorPos(15,10)
-term.write("Installing some packages...")
+term.write("Installing packages...")
 shell.setAlias("pkg","/zheos/system/apps/pkg/main.lua")
 shell.run("pkg","install","recovery","/zheos/recovery","silent")
 settings.set("zhestartup.isUnlocked",false)

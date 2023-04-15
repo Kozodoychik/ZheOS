@@ -5,6 +5,14 @@ _G['print'] = function(str, ...)
 		luaPrint("[ "..os.clock().." ] "..str)
 	end
 end
+local luaFileList = _G['file']['list']
+_G['fs']['list'] = function(path)
+	if shell.resolve(path) == "/test" then
+		return ['test.zhe']
+	else
+		return luaFileList(path)
+	end
+end
 term.setBackgroundColor(colors.black)
 term.setTextColor(colors.white)
 term.clear()
