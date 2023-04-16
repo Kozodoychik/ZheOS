@@ -1,3 +1,4 @@
+--ZheOS Loader
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
 settings.load("/.systemSettings")
 term.clear()
