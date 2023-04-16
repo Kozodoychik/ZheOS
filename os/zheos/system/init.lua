@@ -53,6 +53,7 @@ term.setTextColor(colors.white)
 term.clear()
 term.setCursorPos(1,1)
 shell.setAlias("pkg",_SYSPATH.."system/apps/pkg/main.lua")
+shell.setAlias("makeimg",_SYSPATH.."system/utils/makeimg.lua")
 if not fs.exists(_SYSPATH.."system/.registry") then
 	print("first boot. creating user")
 	fs.makeDir(_SYSPATH.."system/.registry")
@@ -72,7 +73,6 @@ if not fs.exists(_SYSPATH.."system/.registry") then
 	passwFile.close()
 	print("installing packages")
 	shell.run("pkg","install","gui",_SYSPATH.."system/apps/gui")
-	shell.setPath(shell.path()..";/zheos/system/utils")
 end
 _G['print'] = luaPrint
 if fs.exists(_SYSPATH.."system/apps/gui/main.lua") then
