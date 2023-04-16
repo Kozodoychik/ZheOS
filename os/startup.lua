@@ -220,7 +220,7 @@ function bootMenu()
     end
     print('mounting system...')
     mounter.mountRoot(config.loadPaths[bootTo])
-    mounter.mount(config.loadPaths[bootTo].."/rom","rom")
+    mounter.mount(config.loadPaths[bootTo].."rom","rom")
     shell.run("init.lua")
 end
 function wait()
@@ -248,7 +248,4 @@ local function init()
     mounter.mount("zheos/system/rom","rom")
     shell.run("init.lua")
 end
-local ok = pcall(init)
-if not ok then
-   os.reboot() 
-end
+init()
