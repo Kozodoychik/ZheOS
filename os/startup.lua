@@ -1,10 +1,4 @@
---local fsOpen = _G['fs']['open']
---local fsDelete = _G['fs']['delete']
---local fsMove = _G['fs']['move']
---local fsCopy = _G['fs']['copy']
---local fsList = _G['fs']['list']
---local fsIsDir = _G['fs']['isDir']
---local fsExists = _G['fs']['exists']
+os.loadAPI("/bootloader/mountdriver.lua")
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
 _G['_SYSPATH'] = "/zheos/"
 settings.load("/.systemSettings")
