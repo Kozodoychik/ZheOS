@@ -5,6 +5,10 @@ if args[1] == "install" then
     	print("Installing package: "..args[2])
     end
     local req = http.get("http://kotetube.7m.pl/zheos/pkgs/"..args[2].."/info.cfg")
+    if req == nil then
+        error("Connection failure")
+        return nil
+    end
     local files = textutils.unserialise(req.readAll()).files
 	for key, value in ipairs(files) do
     	local text = http.get("http://kotetube.7m.pl/zheos/pkgs/"..args[2].."/"..value)

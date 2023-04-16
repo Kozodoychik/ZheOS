@@ -73,4 +73,7 @@ if not fs.exists(_SYSPATH.."system/.registry") then
 	shell.run("pkg","install","gui",_SYSPATH.."system/apps/gui")
 end
 _G['print'] = luaPrint
-shell.run(_SYSPATH.."system/apps/gui/main.lua")
+if fs.exists(_SYSPATH.."system/apps/gui/main.lua") then
+	shell.run(_SYSPATH.."system/apps/gui/main.lua")
+else
+	printf("No GUI app. Starting CraftOS...")
