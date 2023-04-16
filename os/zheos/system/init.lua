@@ -10,7 +10,7 @@ local luaIsDir = _G['fs']['isDir']
 local luaOpen = _G['fs']['open']
 _G['fs']['list'] = function(path)
 	if shell.resolve(path) == "test" then
-		return {'test.zhe'}
+		return {'test.lua'}
 	else
 		return luaFileList(path)
 	end
@@ -23,7 +23,7 @@ _G['fs']['isDir'] = function(path)
 	end
 end
 _G['fs']['open'] = function(path, mode)
-	if shell.resolve(path) == "test/test.zhe" and mode == "r" then
+	if shell.resolve(path) == "test/test.lua" and mode == "r" then
 		local handle = {}
 		handle.readAll = function()
 			return "print('Hello')"
