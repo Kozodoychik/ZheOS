@@ -8,6 +8,7 @@ end
 local luaFileList = _G['fs']['list']
 local luaIsDir = _G['fs']['isDir']
 local luaOpen = _G['fs']['open']
+local luaExists = _G['fs']['exists']
 _G['fs']['list'] = function(path)
 	if shell.resolve(path) == "test" then
 		return {'test.lua'}
@@ -34,6 +35,13 @@ _G['fs']['open'] = function(path, mode)
 		return handle
 	else
 		return luaOpen(path, mode)
+	end
+end
+_G['fs']['exists'] = function(path)
+	if shell.resolve(path) == "test" or shell.resolve(path) == "test/test.lua" then
+		return true
+	else
+		return luaExists(path)
 	end
 end
 term.setBackgroundColor(colors.black)
