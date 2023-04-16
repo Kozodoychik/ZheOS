@@ -17,8 +17,8 @@ loadFolder = function(img, path)
             img[v].isDir = true
             img[v].content = loadFolder(img[v].content, path.."/"..v)
         else
-            local file = fs.open(path.."/"..v,"rb")
-            img[v].content = file.read(fs.getSize(path.."/"..v))
+            local file = fs.open(path.."/"..v,"r")
+            img[v].content = file.readAll()
             file.close()          
         end
     end
