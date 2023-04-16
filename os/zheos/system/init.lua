@@ -1,4 +1,4 @@
-os.loadAPI(_SYSPATH.."system/apis/registry.lua")
+os.loadAPI("apis/registry.lua")
 local luaPrint = _G['print']
 _G['print'] = function(str, ...)
 	if str then
@@ -9,11 +9,11 @@ term.setBackgroundColor(colors.black)
 term.setTextColor(colors.white)
 term.clear()
 term.setCursorPos(1,1)
-shell.setAlias("pkg",_SYSPATH.."system/apps/pkg/main.lua")
-shell.setAlias("makeimg",_SYSPATH.."system/utils/makeimg.lua")
-if not fs.exists(_SYSPATH.."system/.registry") then
+shell.setAlias("pkg","apps/pkg/main.lua")
+shell.setAlias("makeimg","utils/makeimg.lua")
+if not fs.exists(".registry") then
 	print("first boot. creating user")
-	fs.makeDir(_SYSPATH.."system/.registry")
+	fs.makeDir(".registry")
 	registry.createReg()
 	registry.createKey("system","systemVersion","1.0.0")
 	print("Type username and press Enter")
@@ -22,18 +22,19 @@ if not fs.exists(_SYSPATH.."system/.registry") then
 	local passw = read()
 	print("writing to registry")
 	registry.createKey("user","username",user)
-	fs.makeDir(_SYSPATH.."user")
-	fs.makeDir(_SYSPATH.."user/"..user)
-	fs.makeDir(_SYSPATH.."user/"..user.."/apps")
-	local passwFile = fs.open(_SYSPATH.."user/"..user.."/.passwrd","w")
+	fs.makeDir("user")
+	mounter.mount("zheos/user","user")
+	fs.makeDir("user/"..user)
+	fs.makeDir("user/"..user.."/apps")
+	local passwFile = fs.open("user/"..user.."/.passwrd","w")
 	passwFile.write(passw)
 	passwFile.close()
 	print("installing packages")
-	shell.run("pkg","install","gui",_SYSPATH.."system/apps/gui")
+	shell.run("pkg","install","gui",."apps/gui")
 end
 _G['print'] = luaPrint
-if fs.exists(_SYSPATH.."system/apps/gui/main.lua") then
-	shell.run(_SYSPATH.."system/apps/gui/main.lua")
+if fs.exists("apps/gui/main.lua") then
+	shell.run("apps/gui/main.lua")
 else
 	print("No GUI app. Starting CraftOS...")
 end

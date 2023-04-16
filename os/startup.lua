@@ -221,7 +221,7 @@ function bootMenu()
     mounter.mountRoot(config.loadPaths[bootTo])
     mounter.mount(config.loadPaths[bootTo].."/rom","rom")
     mounter.mount("zheos/user","user")
-    shell.run(config.loadPaths[bootTo])
+    shell.run("init.lua")
 end
 function wait()
     while i<100 or inBootMenu do
