@@ -9,6 +9,11 @@ local luaFileList = _G['fs']['list']
 local luaIsDir = _G['fs']['isDir']
 local luaOpen = _G['fs']['open']
 local luaExists = _G['fs']['exists']
+local luaDir = _G['shell']['dir']
+_G['shell']['dir'] = function()
+	print(luaDir())
+	return luaDir()
+end
 _G['fs']['list'] = function(path)
 	if shell.resolve(path) == "test" then
 		return {'test.lua'}
@@ -33,7 +38,7 @@ _G['fs']['open'] = function(path, mode)
 			return "print('Hello')"
 		end
 		handle.close = function()
-			
+
 		end
 		return handle
 	else
