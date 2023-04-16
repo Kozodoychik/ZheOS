@@ -1,4 +1,4 @@
-regpath = _SYSPATH..'system/.registry'
+regpath = '.registry'
 function createReg()
     fs.makeDir(regpath)
     fs.makeDir(regpath..'/system')
