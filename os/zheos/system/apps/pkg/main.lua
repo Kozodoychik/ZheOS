@@ -9,6 +9,9 @@ if args[1] == "install" then
         error("Connection failure")
     end
     local files = textutils.unserialise(req.readAll()).files
+    if files == nil then
+        error("Faliure: cannot read files list")
+    end
 	for key, value in ipairs(files) do
     	local text = http.get("http://kotetube.7m.pl/zheos/pkgs/"..args[2].."/"..value)
         if args[3] == nil then
