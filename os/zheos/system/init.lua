@@ -1,51 +1,8 @@
 os.loadAPI(_SYSPATH.."system/apis/registry.lua")
 local luaPrint = _G['print']
-local ramdiskMountPoints = {}
 _G['print'] = function(str, ...)
 	if str then
 		luaPrint("[ "..os.clock().." ] "..str)
-	end
-end
-local luaFileList = _G['fs']['list']
-local luaIsDir = _G['fs']['isDir']
-local luaOpen = _G['fs']['open']
-local luaExists = _G['fs']['exists']
-_G['fs']['list'] = function(path)
-	if path == "test" then
-		return {'test.lua'}
-	else
-		return luaFileList(path)
-	end
-end
-_G['fs']['isDir'] = function(path)
-	if path == "test" then
-		return true
-	else
-		return luaIsDir(path)
-	end
-end
-_G['fs']['open'] = function(path, mode)
-	if path == "test/test.lua" and mode == "r" then
-		local handle = {}
-		handle.readAll = function()
-			return "print('Hello')"
-		end
-		handle.readLine = function()
-			return "print('Hello')"
-		end
-		handle.close = function()
-
-		end
-		return handle
-	else
-		return luaOpen(path, mode)
-	end
-end
-_G['fs']['exists'] = function(path)
-	if path == "test" or path == "test/test.lua" then
-		return true
-	else
-		return luaExists(path)
 	end
 end
 term.setBackgroundColor(colors.black)

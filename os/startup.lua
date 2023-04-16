@@ -1,46 +1,30 @@
 local fsOpen = _G['fs']['open']
-local fsDelete = _G['fs']['delete']
-local fsMove = _G['fs']['move']
-local fsCopy = _G['fs']['copy']
+--local fsDelete = _G['fs']['delete']
+--local fsMove = _G['fs']['move']
+--local fsCopy = _G['fs']['copy']
+local fsList = _G['fs']['list']
+local fsIsDir = _G['fs']['isDir']
+local fsExists = _G['fs']['exists']
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
+local ramdisk = {}
 _G['_SYSPATH'] = "/zheos/"
 settings.load("/.systemSettings")
-local isUnlocked = settings.get("zhestartup.isUnlocked")
 term.clear()
 term.setBackgroundColor(colors.black)
 term.setCursorPos(1,1)
-print('rewriting fs functions')
-_G['fs']['open'] = function(path,dest)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
-        error("Access denied",0)
-        return nil
-   else
-        return fsOpen(path,dest)
-   end
+local getPathTable = function(path)
+    local t = {}
+    path:gsub("([^/]+)", function(c) table.insert(t, c) end)
+    return t
 end
-_G['fs']['move'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
-        error("Access denied",0)
-        return nil
-   else
-        return fsMove(path,mode)
-   end
-end
-_G['fs']['copy'] = function(path,mode)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
-        error("Access denied",0)
-        return nil
-   else
-        return fsCopy(path,mode)
-   end
-end
-_G['fs']['delete'] = function(path)
-   if shell.resolveProgram(path) == shell.resolveProgram("/startup.lua") and isUnlocked == false then
-        error("Access denied",0)
-        return nil
-   else
-        return fsDelete(path)
-   end
+fs.list = function(path)
+    local pathTable = getPathTable(path)
+    if #pathTable == 0 then
+        local files = {}
+        for _,v in ramdisk do
+            table.insert(files,v)
+        end
+        return files
 end
 local inBootMenu = false
 local i = 0
@@ -62,6 +46,7 @@ function bootMenu()
     end
     term.clear()
     term.setCursorPos(1,1)
+    ramdisk = textutils.unserialise(fs.open(config.ramDisks[bootTo]).readAll())
     shell.run(config.loadPaths[bootTo])
 end
 function wait()
@@ -84,6 +69,7 @@ local function init()
     parallel.waitForAny(wait,waitForKey)
     print('booting from config.default')
     os.sleep(0.5)
+    ramdisk = textutils.unserialise(fs.open(config.ramDisks[config.default]).readAll())
     shell.run(config.loadPaths[config.default])
 end
 local ok = pcall(init)

@@ -13,7 +13,7 @@ term.write("ZheOS v1.0.0 Setup")
 term.setCursorPos(15,10)
 for key, value in ipairs(filesToDownload) do
 	term.clearLine()
-	term.setCursorPos(15-#value,10)
+	term.setCursorPos(15,10)
 	term.write(value)
 	download(value)
 end
@@ -28,7 +28,7 @@ fs.delete("/.temp")
 term.clearLine()
 term.setCursorPos(15,10)
 term.write("Creating startup config...")
-local cfg = {default=1,loadPaths={"/zheos/system/init.lua","/zheos/recovery/main.lua","/rom/programs/shell.lua"},labels={"ZheOS Init","Recovery","CraftOS"}}
+local cfg = {default=1,loadPaths={"/zheos/system/init.lua","/zheos/recovery/main.lua","/rom/programs/shell.lua"},labels={"ZheOS Init","Recovery","CraftOS"},ramDisks={"/image.img",nil,nil}}
 local cfgFile = fs.open("/zhestartup.cfg","w")
 cfgFile.write(textutils.serialize(cfg))
 cfgFile.close()
