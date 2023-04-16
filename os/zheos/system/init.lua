@@ -22,8 +22,8 @@ _G['fs']['isDir'] = function(path)
 		return luaIsDir(path)
 	end
 end
-_G['fs']['open'] = function(path)
-	if shell.resolve(path) == "test/test.zhe" then
+_G['fs']['open'] = function(path, mode)
+	if shell.resolve(path) == "test/test.zhe" and mode == "r" then
 		local handle = {}
 		handle.readAll = function()
 			return "print('Hello')"
@@ -33,7 +33,7 @@ _G['fs']['open'] = function(path)
 		end
 		return handle
 	else
-		return luaOpen(path)
+		return luaOpen(path, mode)
 	end
 end
 term.setBackgroundColor(colors.black)
