@@ -15,21 +15,21 @@ _G['shell']['dir'] = function()
 	return luaDir()
 end
 _G['fs']['list'] = function(path)
-	if shell.resolve(path) == "test" then
+	if path == "test" then
 		return {'test.lua'}
 	else
 		return luaFileList(path)
 	end
 end
 _G['fs']['isDir'] = function(path)
-	if shell.resolve(path) == "test" then
+	if path == "test" then
 		return true
 	else
 		return luaIsDir(path)
 	end
 end
 _G['fs']['open'] = function(path, mode)
-	if shell.resolve(path) == "test/test.lua" and mode == "r" then
+	if path == "test/test.lua" and mode == "r" then
 		local handle = {}
 		handle.readAll = function()
 			return "print('Hello')"
@@ -46,7 +46,7 @@ _G['fs']['open'] = function(path, mode)
 	end
 end
 _G['fs']['exists'] = function(path)
-	if shell.resolve(path) == "test" or shell.resolve(path) == "test/test.lua" then
+	if path == "test" or path == "test/test.lua" then
 		return true
 	else
 		return luaExists(path)
