@@ -1,5 +1,6 @@
 os.loadAPI(_SYSPATH.."system/apis/registry.lua")
 local luaPrint = _G['print']
+local ramdiskMountPoints = {}
 _G['print'] = function(str, ...)
 	if str then
 		luaPrint("[ "..os.clock().." ] "..str)
@@ -71,10 +72,11 @@ if not fs.exists(_SYSPATH.."system/.registry") then
 	passwFile.close()
 	print("installing packages")
 	shell.run("pkg","install","gui",_SYSPATH.."system/apps/gui")
+	shell.setPath(shell.path()..";/zheos/system/utils")
 end
 _G['print'] = luaPrint
 if fs.exists(_SYSPATH.."system/apps/gui/main.lua") then
 	shell.run(_SYSPATH.."system/apps/gui/main.lua")
 else
-	printf("No GUI app. Starting CraftOS...")
+	print("No GUI app. Starting CraftOS...")
 end
