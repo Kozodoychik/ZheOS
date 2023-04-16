@@ -77,3 +77,4 @@ if fs.exists(_SYSPATH.."system/apps/gui/main.lua") then
 	shell.run(_SYSPATH.."system/apps/gui/main.lua")
 else
 	printf("No GUI app. Starting CraftOS...")
+end
