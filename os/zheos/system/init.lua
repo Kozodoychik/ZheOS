@@ -7,6 +7,7 @@ _G['print'] = function(str, ...)
 end
 local luaFileList = _G['fs']['list']
 local luaIsDir = _G['fs']['isDir']
+local luaOpen = _G['fs']['open']
 _G['fs']['list'] = function(path)
 	if shell.resolve(path) == "test" then
 		return {'test.zhe'}
@@ -19,6 +20,20 @@ _G['fs']['isDir'] = function(path)
 		return true
 	else
 		return luaIsDir(path)
+	end
+end
+_G['fs']['open'] = function(path)
+	if shell.resolve(path) == "test/test.zhe" then
+		local handle = {}
+		handle.readAll = function()
+			return "print('Hello')"
+		end
+		handle.readLine = function()
+			return "print('Hello')"
+		end
+		return handle
+	else
+		return luaOpen(path)
 	end
 end
 term.setBackgroundColor(colors.black)
