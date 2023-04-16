@@ -1,4 +1,4 @@
-local mountPoints = {zheos="/test"}
+local mountPoints = {zheos="/test",rom="/rom"}
 local fsOpen = _G['fs']['open']
 local fsDelete = _G['fs']['delete']
 local fsMove = _G['fs']['move']
