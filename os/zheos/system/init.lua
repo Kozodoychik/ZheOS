@@ -30,7 +30,7 @@ if not fs.exists(".registry") then
 	passwFile.write(passw)
 	passwFile.close()
 	print("installing packages")
-	shell.run("pkg","install","gui",."apps/gui")
+	shell.run("pkg","install","gui","apps/gui")
 end
 _G['print'] = luaPrint
 if fs.exists("apps/gui/main.lua") then
