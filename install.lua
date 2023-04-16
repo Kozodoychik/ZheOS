@@ -11,11 +11,11 @@ term.clear()
 term.setCursorPos(18,8)
 term.write("ZheOS v1.0.0 Setup")
 term.setCursorPos(15,10)
-for key, value in ipairs(filesToDownload) do
+for key, v in ipairs(filesToDownload) do
 	term.clearLine()
 	term.setCursorPos(15,10)
-	term.write(value)
-	download(value)
+	term.write(v)
+	download(v)
 end
 term.clearLine()
 term.setCursorPos(15,10)
