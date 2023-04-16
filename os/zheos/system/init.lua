@@ -32,6 +32,9 @@ _G['fs']['open'] = function(path, mode)
 		handle.readLine = function()
 			return "print('Hello')"
 		end
+		handle.close = function()
+			
+		end
 		return handle
 	else
 		return luaOpen(path, mode)
