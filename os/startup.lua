@@ -1,31 +1,16 @@
-local fsOpen = _G['fs']['open']
+--local fsOpen = _G['fs']['open']
 --local fsDelete = _G['fs']['delete']
 --local fsMove = _G['fs']['move']
 --local fsCopy = _G['fs']['copy']
-local fsList = _G['fs']['list']
-local fsIsDir = _G['fs']['isDir']
-local fsExists = _G['fs']['exists']
+--local fsList = _G['fs']['list']
+--local fsIsDir = _G['fs']['isDir']
+--local fsExists = _G['fs']['exists']
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
-local ramdisk = {}
 _G['_SYSPATH'] = "/zheos/"
 settings.load("/.systemSettings")
 term.clear()
 term.setBackgroundColor(colors.black)
 term.setCursorPos(1,1)
-local getPathTable = function(path)
-    local t = {}
-    path:gsub("([^/]+)", function(c) table.insert(t, c) end)
-    return t
-end
-fs.list = function(path)
-    local pathTable = getPathTable(path)
-    if #pathTable == 0 then
-        local files = {}
-        for _,v in ramdisk do
-            table.insert(files,v)
-        end
-        return files
-end
 local inBootMenu = false
 local i = 0
 function bootMenu()
@@ -46,7 +31,6 @@ function bootMenu()
     end
     term.clear()
     term.setCursorPos(1,1)
-    ramdisk = textutils.unserialise(fs.open(config.ramDisks[bootTo]).readAll())
     shell.run(config.loadPaths[bootTo])
 end
 function wait()
@@ -69,7 +53,6 @@ local function init()
     parallel.waitForAny(wait,waitForKey)
     print('booting from config.default')
     os.sleep(0.5)
-    ramdisk = textutils.unserialise(fs.open(config.ramDisks[config.default]).readAll())
     shell.run(config.loadPaths[config.default])
 end
 local ok = pcall(init)
