@@ -46,3 +46,16 @@ fs.exists = function(path)
     end
     return fsExists(point.."/"..path)
 end
+fs.open = function(path)
+    local point = nil
+    for k,v in pairs(mountPoints) do
+        if path.sub(path, 1, string.len(k)) then
+            point = v
+            break
+        end
+    end
+    if not point then
+        return fsOpen(path)
+    end
+    return fsOpen(point.."/"..path)
+end
