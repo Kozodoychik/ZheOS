@@ -24,7 +24,6 @@ if not fs.exists(".registry") then
 	print("writing to registry")
 	registry.createKey("user","username",user)
 	fs.makeDir("user")
-	mounter.mount("zheos/user","user")
 	fs.makeDir("user/"..user)
 	fs.makeDir("user/"..user.."/apps")
 	local passwFile = fs.open("user/"..user.."/.passwrd","w")
