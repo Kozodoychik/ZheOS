@@ -37,4 +37,5 @@ if fs.exists("apps/gui/main.lua") then
 	shell.run("apps/gui/main.lua")
 else
 	print("No GUI app. Starting CraftOS...")
+	shell.run("rom/programs/shell.lua")
 end
