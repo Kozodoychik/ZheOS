@@ -224,7 +224,12 @@ function wait()
     while i<100 or inBootMenu do
         if not inBootMenu then
             term.setCursorPos(24, 11)
-            term.write(" # ")
+            if i%3==0 then
+                term.write("#  ")
+            elseif i%3==1 then
+                term.write(" # ")
+            elseif i%3==2 then
+                term.write("  #")
         end
         i = i + 1
         os.sleep(0.01)
