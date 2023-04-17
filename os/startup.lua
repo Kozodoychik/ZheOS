@@ -223,7 +223,7 @@ end
 function wait()
     while i<100 or inBootMenu do
         if not inBootMenu then
-            term.setCursorPos(15, 24)
+            term.setCursorPos(24, 11)
             term.write(" # ")
         end
         i = i + 1
