@@ -1,6 +1,6 @@
 local args = {...}
 if args[1] == nil then
-    print("Usages")
+    print("Usages:")
     print("cat <filename>")
 else
     local file = fs.open(args[1],"r")
