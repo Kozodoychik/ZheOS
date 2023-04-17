@@ -1,10 +1,6 @@
 --ZheOS Loader
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
 settings.load("/.systemSettings")
-term.setBackgroundColor(colors.lightGray)
-term.setTextColor(colors.gray)
-term.clear()
-term.setCursorPos(1,1)
 local inBootMenu = false
 local i = 0
 local mountPoints = {}
@@ -245,6 +241,10 @@ local function waitForKey()
     end
 end
 local function init()
+    term.setBackgroundColor(colors.lightGray)
+    term.setTextColor(colors.gray)
+    term.clear()
+    term.setCursorPos(1,1)
     parallel.waitForAny(wait,waitForKey)
     print('booting from config.default')
     os.sleep(0.5)
