@@ -221,9 +221,9 @@ function bootMenu()
     shell.run("init.lua")
 end
 function wait()
-    while i<100 or inBootMenu do
+    while i<5 or inBootMenu do
         if not inBootMenu then
-            term.setCursorPos(24, 11)
+            term.setCursorPos(23, 11)
             if i%3==0 then
                 term.write("#  ")
             elseif i%3==1 then
@@ -233,7 +233,7 @@ function wait()
             end
         end
         i = i + 1
-        os.sleep(0.01)
+        os.sleep(1)
     end
     while inBootMenu do os.sleep(0) end
 end
