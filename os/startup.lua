@@ -230,6 +230,7 @@ function wait()
                 term.write(" # ")
             elseif i%3==2 then
                 term.write("  #")
+            end
         end
         i = i + 1
         os.sleep(0.01)
