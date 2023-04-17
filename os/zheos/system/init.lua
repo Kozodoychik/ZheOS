@@ -13,6 +13,7 @@ print("Mounting user...")
 mounter.mount("zheos/user","user")
 shell.setAlias("pkg","apps/pkg/main.lua")
 shell.setAlias("makeimg","utils/makeimg.lua")
+shell.setAlias("cat","utils/cat.lua")
 if not fs.exists(".registry") then
 	print("first boot. creating user")
 	fs.makeDir(".registry")
