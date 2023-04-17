@@ -1,4 +1,12 @@
-local filesToDownload = {"startup.lua","zheos/system/init.lua","zheos/system/apis/registry.lua","zheos/system/apps/pkg/main.lua","zheos/system/utils/makeimg.lua","zheos/recovery/init.lua"}
+local filesToDownload = {
+	"startup.lua",
+	"zheos/system/init.lua",
+	"zheos/system/apis/registry.lua",
+	"zheos/sytsem/apis/threading.lua",
+	"zheos/system/apps/pkg/main.lua",
+	"zheos/system/utils/makeimg.lua",
+	"zheos/recovery/init.lua"
+}
 function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")
