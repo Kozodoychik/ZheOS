@@ -2,7 +2,8 @@
 local config = textutils.unserialize(fs.open("/zhestartup.cfg","r").readAll())
 settings.load("/.systemSettings")
 term.clear()
-term.setBackgroundColor(colors.black)
+term.setBackgroundColor(colors.lightGray)
+term.setTextColor(colors.gray)
 term.setCursorPos(1,1)
 local inBootMenu = false
 local i = 0
@@ -225,6 +226,10 @@ function bootMenu()
 end
 function wait()
     while i<100 or inBootMenu do
+        if not inBootMenu then
+            term.setCursorPos(15, 24)
+            term.write(" # ")
+        end
         i = i + 1
         os.sleep(0.01)
     end
