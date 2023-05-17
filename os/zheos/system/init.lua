@@ -34,6 +34,7 @@ if not fs.exists(".registry") then
 	shell.run("pkg","install","gui","apps/gui")
 	registry.saveRegistry()
 end
+registry.loadRegistry()
 _G['print'] = luaPrint
 if fs.exists("apps/gui/main.lua") then
 	shell.run("apps/gui/main.lua")
