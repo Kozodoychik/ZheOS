@@ -17,16 +17,17 @@ function getKeyFromPath(table, path)
 end
 function createKeyFromPath(t, value, path)
     local table2 = {}
-    for k,v in pairs(path) do
-        if k == #path then
-            table2[v] = value
-        else if table2[v] = nil then
-            table2[v] = {}
-        else
-            table2[v] = createKeyFromPath(table2, {}, v)
-        end
+    if #path == 1 then
+      table2[path[1]] = value
+    elseif path[1] ~= nil then
+      local v = path[1]
+      table2[v] = {}
+      table.remove(path,1)
+      createKeyFromPath(table2[v], value, path)
     end
-    table.insert(t, table2)
+    for k,v in pairs(table2) do
+        t[k] = v
+    end
 end
 function loadRegistry()
     file = fs.open(regpath, "r")
