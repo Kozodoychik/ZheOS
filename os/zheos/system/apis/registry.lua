@@ -5,22 +5,28 @@ local function saveRegistry()
     file.write(textutils.serialise(registry))
     file.close()
 end
-local function getKeyFromPath(table, path)
+function getKeyFromPath(table, path)
     local node = table
-    for v in pairs(path) do
+    for v in ipairs(path) do
         node = node[v]
         if node == nil then
-            error("invalid table path")
-            return
+            node = {}
         end
     end
     return node
 end
-local function createKeyFromPath(table, path)
-    local node = table
-    for v in pairs(path) do
-        node = node[v]
+function createKeyFromPath(t, value, path)
+    local table2 = {}
+    for k,v in pairs(path) do
+        if k == #path then
+            table2[v] = value
+        else if table2[v] = nil then
+            table2[v] = {}
+        else
+            table2[v] = createKeyFromPath(table2, {}, v)
+        end
     end
+    table.insert(t, table2)
 end
 function loadRegistry()
     file = fs.open(regpath, "r")
@@ -30,7 +36,7 @@ end
 function createRegistry()
     saveRegistry()
 end
-function createKey(...)
+function createKey(value, ...)
     local path = table.pack(...)
     local key = createKeyFromPath(registry, path)
 end
