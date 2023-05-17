@@ -15,7 +15,6 @@ if not fs.exists(".registry") then
 	local user = read()
 	print("Type password and press Enter")
 	local passw = read()
-	print("writing to registry")
 	registry.createKey(user,"user","username")
 	fs.makeDir("user")
 	fs.makeDir("user/"..user)
@@ -23,8 +22,8 @@ if not fs.exists(".registry") then
 	local passwFile = fs.open("user/"..user.."/.passwrd","w")
 	passwFile.write(passw)
 	passwFile.close()
-	print("installing packages")
-	shell.run("pkg","install","gui","apps/gui")
+	--print("installing packages")
+	--shell.run("pkg","install","gui","apps/gui")
 	registry.saveRegistry()
 end
 registry.loadRegistry()
