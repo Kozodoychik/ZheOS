@@ -39,10 +39,13 @@ function createRegistry()
     saveRegistry()
 end
 function createKey(value, ...)
+    loadRegistry()
     local path = table.pack(...)
     createKeyFromPath(registry, value, path)
+    saveRegistry()
 end
 function readKey(...)
+    loadRegistry()
     local path = table.pack(...)
     local value = getKeyFromPath(registry, path)
     return value
