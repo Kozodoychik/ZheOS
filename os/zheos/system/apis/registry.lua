@@ -5,17 +5,18 @@ local function saveRegistry()
     file.write(textutils.serialise(registry))
     file.close()
 end
-function getKeyFromPath(table, path)
+local function getKeyFromPath(table, path)
     local node = table
-    for v in ipairs(path) do
+    for k,v in ipairs(path) do
         node = node[v]
         if node == nil then
-            node = {}
+            error("invalid key path")
+            return nil
         end
     end
     return node
 end
-function createKeyFromPath(t, value, path)
+local function createKeyFromPath(t, value, path)
     local table2 = {}
     if #path == 1 then
       table2[path[1]] = value
@@ -39,11 +40,10 @@ function createRegistry()
 end
 function createKey(value, ...)
     local path = table.pack(...)
-    local key = createKeyFromPath(registry, path)
+    createKeyFromPath(registry, value, path)
 end
 function readKey(...)
-    reg = fs.open(regpath..'/'..regname..'/'..keyname, 'r')
-    local content = reg.readLine()
-    reg.close()
-    return content
+    local path = table.pack(...)
+    local value = getKeyFromPath(registry, path)
+    return value
 end
