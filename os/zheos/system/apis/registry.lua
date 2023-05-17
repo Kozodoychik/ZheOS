@@ -1,10 +1,5 @@
 local regpath = '.registry'
 local registry = {}
-local function saveRegistry()
-    file = fs.open(regpath, "w")
-    file.write(textutils.serialise(registry))
-    file.close()
-end
 local function getKeyFromPath(table, path)
     local node = table
     for k,v in ipairs(path) do
@@ -29,6 +24,11 @@ local function createKeyFromPath(t, value, path)
     for k,v in pairs(table2) do
         t[k] = v
     end
+end
+function saveRegistry()
+    file = fs.open(regpath, "w")
+    file.write(textutils.serialise(registry))
+    file.close()
 end
 function loadRegistry()
     file = fs.open(regpath, "r")
