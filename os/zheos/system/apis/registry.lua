@@ -10,7 +10,7 @@ local function getKeyFromPath(path)
     end
     return node
 end
-local function createKeyFromPath(value, path)
+local function createKeyFromPath(table, value, path)
     local table2 = {}
     if #path == 1 then
       table2[path[1]] = value
@@ -21,7 +21,7 @@ local function createKeyFromPath(value, path)
       createKeyFromPath(table2[v], value, path)
     end
     for k,v in pairs(table2) do
-        _G['reg'][k] = v
+        table = v
     end
 end
 function saveRegistry()
@@ -41,7 +41,7 @@ end
 function createKey(value, ...)
     loadRegistry()
     local path = table.pack(...)
-    createKeyFromPath(value, path)
+    createKeyFromPath(_G['reg'], value, path)
     saveRegistry()
 end
 function readKey(...)
