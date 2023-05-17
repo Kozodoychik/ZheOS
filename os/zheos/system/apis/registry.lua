@@ -11,19 +11,18 @@ local function getKeyFromPath(path)
     return node
 end
 local function createKeyFromPath(t, value, path)
-    local table2 = {}
-    if #path == 1 then
-      table2[path[1]] = value
-    elseif path[1] ~= nil then
-      local v = path[1]
-      table2[v] = {}
-      table.remove(path,1)
-      createKeyFromPath(table2[v], value, path)
+    local node = t    
+    for k,v in ipairs(path) do
+      if k == #path then
+        node[v] = value
+        return
+      end
+      if node[v] == nil then
+        node[v] = {}
+      end
+      node = node[v]
     end
-    for k,v in pairs(table2) do
-        t = v
-    end
-end
+  end
 function saveRegistry()
     file = fs.open(regpath, "w")
     file.write(textutils.serialise(_G['reg']))
