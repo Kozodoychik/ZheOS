@@ -10,7 +10,7 @@ local function getKeyFromPath(path)
     end
     return node
 end
-local function createKeyFromPath(table, value, path)
+local function createKeyFromPath(t, value, path)
     local table2 = {}
     if #path == 1 then
       table2[path[1]] = value
@@ -21,7 +21,7 @@ local function createKeyFromPath(table, value, path)
       createKeyFromPath(table2[v], value, path)
     end
     for k,v in pairs(table2) do
-        table = v
+        t = v
     end
 end
 function saveRegistry()
