@@ -1,10 +1,4 @@
 os.loadAPI("apis/registry.lua")
-local luaPrint = _G['print']
-_G['print'] = function(str, ...)
-	if str then
-		luaPrint("[ "..os.clock().." ] "..str)
-	end
-end
 term.setBackgroundColor(colors.black)
 term.setTextColor(colors.white)
 term.clear()
@@ -15,7 +9,6 @@ shell.setAlias("pkg","apps/pkg/main.lua")
 shell.setAlias("makeimg","utils/makeimg.lua")
 shell.setAlias("cat","utils/cat.lua")
 if not fs.exists(".registry") then
-	print("first boot. creating user")
 	registry.createRegistry()
 	registry.createKey("1.0.0", "system","systemVersion")
 	print("Type username and press Enter")
@@ -35,7 +28,6 @@ if not fs.exists(".registry") then
 	registry.saveRegistry()
 end
 registry.loadRegistry()
-_G['print'] = luaPrint
 if fs.exists("apps/gui/main.lua") then
 	shell.run("apps/gui/main.lua")
 else
