@@ -58,7 +58,7 @@ function redraw()
 		for i=1, filled do
 			term.write(" ")
 		end
-		term.setBackgroundColor(colors.black)
+		term.setBackgroundColor(colors.lightGray)
 		for i=1, empty do
 			term.write(" ")
 		end
