@@ -1,43 +1,235 @@
-local windows = {}
 local buttons = {}
-local winnum = 0
-local selectBtn = 0
-function start(label)
-	term.setBackgroundColor(colors.blue)
-	term.setTextColor(colors.cyan)
-	term.clear()
-	term.setCursorPos(1,1)
-	term.write(label)
-end
-function newwin(label, xStart, yStart, width, height)
-	local win = window.create(term.current(), xStart, yStart, width, height)
-	windows[winnum] = win
-	term.redirect(win)
-	term.setBackgroundColor(colors.white)
-	term.setTextColor(colors.black)
-	term.clear()
-	term.setCursorPos(2,1)
-	term.write(label)
-	return win
-end
-function label(win, label, xPos, yPos)
-	term.redirect(win)
-	term.setCursorPos(xPos, yPos)
-	term.write(label)
-end
-function button(win, label, func)
-	local btn = {}
-	btn.label = label
-	btn.win = win
-	btn.onClick = func
-	table.insert(buttons, btn)
-	term.redirect(win)
-	local w, h = term.getSize()
-	term.setCursorPos(2, h-2)
-	term.setTextColor(colors.white)
-	term.setBackgroundColor(colors.blue)
-	term.write(" "..label.." ")
-end
-function mainloop()
+local labels = {}
+local texts = {}
+local progressBars = {}
+local currentText = ""
+local bgColor = colors.black
 
+local function redraw()
+	term.setBackgroundColor(bgColor)
+	term.clear()
+	
+	for k,v in pairs(buttons) do
+		term.setCursorPos(v.x, v.y)
+		term.setTextColor(colors.white)
+		term.setBackgroundColor(v.bg)
+		term.write(" "..v.label.." ")
+	end
+
+	term.setBackgroundColor(bgColor)
+	
+	for k,v in pairs(labels) do
+		term.setCursorPos(v.x, v.y)
+		term.setTextColor(v.fg)
+		term.write(v.text)
+	end
+
+	term.setBackgroundColor(colors.gray)
+
+	for k,v in pairs(texts) do
+		term.setCursorPos(v.x, v.y)
+		term.setTextColor(colors.black)
+		term.write((function()
+			local str = ""
+			for i=1, v.width do
+				str = str.." "
+			end
+			return str
+		end)())
+		term.setCursorPos(v.x, v.y)
+		term.write(v.text)
+	end
+
+	term.setBackgroundColor(bgColor)
+
+	for k,v in pairs(progressBars) do
+		local filled = (v.width/100)*v.progress
+		local empty = (v.width)-filled
+		term.setCursorPos(v.x, v.y)
+		term.setBackgroundColor(v.fg)
+		for i=1, filled do
+			term.write(" ")
+		end
+		term.setBackgroundColor(colors.black)
+		for i=1, empty do
+			term.write(" ")
+		end
+	end
+end
+
+local function focusOnText(id)
+	local text = texts[id]
+	term.setCursorPos(text.x, text.y)
+	if #text.text < text.width then
+		term.setCursorBlink(true)
+	end
+end
+
+function init()
+	term.setCursorBlink(false)
+	redraw()
+end
+
+function exit()
+	os.queueEvent("stopGUI")
+end
+
+function setBGColor(color)
+	bgColor = color
+end
+
+function newButton(id, x, y, label, bg, handler)
+	local btn = {
+		x=x,
+		y=y,
+		width=#label+2,
+		label=label,
+		bg=bg,
+		handler=handler
+	}
+	if buttons[id] == nil then
+		buttons[id] = btn
+	else
+		error(id.." button already exists")
+	end
+end
+
+function newLabel(id, x, y, text, fg)
+	local label = {
+		x=x,
+		y=y,
+		fg=fg,
+		text=text
+	}
+	if labels[id] == nil then
+		labels[id] = label
+	else
+		error(id.." label already exists")
+	end
+end
+
+function newText(id, x, y, width)
+	local text = {
+		x=x,
+		y=y,
+		text="",
+		width=width
+	}
+	if texts[id] == nil then
+		texts[id] = text
+	else
+		error(id.." text field already exists")
+	end
+end
+
+function newProgressBar(id, x, y, width, fg, progress)
+	local progress = {
+		x=x,
+		y=y,
+		width=width,
+		fg=fg,
+		progress=progress
+	}
+	if progressBars[id] == nil then
+		progressBars[id] = progress
+	else
+		error(id.." progressbar already exists")
+	end
+end
+
+function getButtonProperty(id, prop)
+	return buttons[id][prop]
+end
+
+function getLabelProperty(id, prop)
+	return labels[id][prop]
+end
+
+function setButtonProperty(id, prop, value)
+	if prop == "label" then
+		buttons[id].width = #value+2
+	end
+	buttons[id][prop] = value
+end
+
+function setLabelProperty(id, prop, value)
+	labels[id][prop] = value
+end
+
+function getTextProperty(id, prop)
+	return texts[id][prop]
+end
+
+function setTextProperty(id, prop, value)
+	texts[id][prop] = value
+end
+
+function getProgressProperty(id, prop)
+	return progressBars[id][prop]
+end
+
+function setProgressProperty(id, prop, value)
+	progressBars[id][prop] = value
+end
+
+function destroyButton(id)
+	buttons[id] = nil
+end
+
+function destroyLabel(id)
+	labels[id] = nil
+end
+
+function destroyText(id)
+	texts[id] = nil
+end
+
+function destroyProgress(id)
+	progressBars[id] = nil
+end
+
+function mainLoop()
+	while true do
+		redraw()
+		local event, p1, p2, p3 = os.pullEvent()
+		if event == "stopGUI" then
+			term.setBackgroundColor(colors.black)
+			term.setTextColor(colors.white)
+			term.setCursorPos(1,1)
+			term.clear()
+			term.setCursorBlink(true)
+			return
+		elseif event == "mouse_click" then
+			if p1 == 1 then
+				for k,v in pairs(buttons) do
+					if p3 == v.y and p2 >= v.x and p2 < (v.x+v.width) then
+						v.handler()
+						break
+					end 
+				end
+				for k,v in pairs(texts) do
+					if p3 == v.y and p2 >= v.x and p2 < (v.x+v.width) then
+						currentText = k
+						focusOnText(k)
+						break
+					else
+						term.setCursorBlink(false)
+						currentText = nil
+					end
+				end
+			end
+		elseif event == "char" then
+			if currentText then
+				if #texts[currentText].text < texts[currentText].width-1 then
+ 					texts[currentText].text = texts[currentText].text..p1
+				end
+			end
+		elseif event == "key" then
+			if p1 == keys.backspace and currentText then
+				if #texts[currentText].text > 0 then
+					texts[currentText].text = string.sub(texts[currentText].text, 0, #texts[currentText].text-1)
+				end
+			end
+		end
+	end
 end
