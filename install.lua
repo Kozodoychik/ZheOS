@@ -9,13 +9,9 @@ local filesToDownload = {
 	"zheos/system/utils/cat.lua",
 	"zheos/recovery/init.lua"
 }
-function download(filename, ...)
+function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/"..filename)
-	if ... == nil then
-		local file = fs.open("/"..filename,"w")
-	else
-		local file = fs.open(..., "w")
-	end
+	local file = fs.open("/"..filename,"w")
 	file.write(req.readAll())
 	file.close()
 end
@@ -32,7 +28,10 @@ function install()
 	gui.exit()
 end
 print("Downloading GUI API...")
-download("zheos/system/apis/gui.lua", "/.temp/gui.lua")
+local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/zheos/system/apis/gui.lua"..filename)
+local file = fs.open("/.temp/gui.lua","w")
+file.write(req.readAll())
+file.close()
 os.loadAPI("/.temp/gui.lua")
 gui.init()
 gui.setBGColor(colors.white)
