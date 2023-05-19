@@ -3,7 +3,7 @@ local filesToDownload = {
 	"zheos/system/init.lua",
 	"zheos/system/apis/registry.lua",
 	"zheos/system/apis/threading.lua",
-	"zheos/system/apis/gui.lua",
+	"zheos/system/apis/gui.lua"
 	"zheos/system/apps/pkg/main.lua",
 	"zheos/system/utils/makeimg.lua",
 	"zheos/system/utils/cat.lua",
