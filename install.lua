@@ -17,7 +17,7 @@ function download(filename)
 end
 
 function install()
-	gui.destroyButton(installBtn)
+	gui.destroyButton("installBtn")
 	for key, v in ipairs(filesToDownload) do
 		term.clearLine()
 		term.setCursorPos(15,10)
@@ -28,7 +28,7 @@ function install()
 	gui.exit()
 end
 print("Downloading GUI API...")
-local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/zheos/system/apis/gui.lua"..filename)
+local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/zheos/system/apis/gui.lua")
 local file = fs.open("/.temp/gui.lua","w")
 file.write(req.readAll())
 file.close()

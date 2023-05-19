@@ -5,7 +5,15 @@ local progressBars = {}
 local currentText = ""
 local bgColor = colors.black
 
-local function redraw()
+local function focusOnText(id)
+	local text = texts[id]
+	term.setCursorPos(text.x, text.y)
+	if #text.text < text.width then
+		term.setCursorBlink(true)
+	end
+end
+
+function redraw()
 	term.setBackgroundColor(bgColor)
 	term.clear()
 	
@@ -54,14 +62,6 @@ local function redraw()
 		for i=1, empty do
 			term.write(" ")
 		end
-	end
-end
-
-local function focusOnText(id)
-	local text = texts[id]
-	term.setCursorPos(text.x, text.y)
-	if #text.text < text.width then
-		term.setCursorBlink(true)
 	end
 end
 
