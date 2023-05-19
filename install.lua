@@ -23,7 +23,7 @@ function install()
 	for key, v in ipairs(filesToDownload) do
 		gui.setLabelProperty("file", "text", v)
 		download(v)
-		gui.setProgressProperty("progress", "progress", (#filesToDownload/100)*key)
+		gui.setProgressProperty("progress", "progress", (key/#filesToDownload)*100)
 		gui.redraw()
 	end
 	gui.exit()
