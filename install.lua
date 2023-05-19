@@ -18,12 +18,13 @@ end
 
 function install()
 	gui.destroyButton("installBtn")
+	gui.newProgressBar("progress", 2, 10, 49, colors.lime, 0)
+	gui.newLabel("file", 2, 9, "", colors.lightGray)
 	for key, v in ipairs(filesToDownload) do
-		term.clearLine()
-		term.setCursorPos(15,10)
-		term.write(v)
+		gui.setLabelProperty("file", "text", v)
 		download(v)
 		gui.setProgressProperty("progress", "progress", (#filesToDownload/100)*key)
+		gui.redraw()
 	end
 	gui.exit()
 end
@@ -37,7 +38,6 @@ gui.init()
 gui.setBGColor(colors.white)
 gui.newLabel("mainLabel", 1, 1, "ZheOS 1.0.0 Setup", colors.lightGray)
 gui.newButton("installBtn", 2, 3, "Install", colors.lime, install)
-gui.newProgressBar("progress", 2, 10, 49, colors.lime, 0)
 gui.mainLoop()
 
 fs.delete("/.temp")
