@@ -2,12 +2,12 @@ local buttons = {}
 local labels = {}
 local texts = {}
 local progressBars = {}
-local currentText = ""
+local currentText = nil
 local bgColor = colors.black
 
 local function focusOnText(id)
 	local text = texts[id]
-	term.setCursorPos(text.x, text.y)
+	term.setCursorPos(text.x+#text.text, text.y)
 	if #text.text < text.width then
 		term.setCursorBlink(true)
 	end
@@ -191,6 +191,9 @@ end
 function mainLoop()
 	while true do
 		redraw()
+		if currentText then
+			focusOnText(currentText)
+		end
 		local event, p1, p2, p3 = os.pullEvent()
 		if event == "stopGUI" then
 			term.setBackgroundColor(colors.black)
