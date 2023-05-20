@@ -14,8 +14,12 @@ local function exitApp()
     appWindow.setBackgroundColor(colors.black)
     appWindow.clear()
     appWindow.setCursorPos(1,1)
+    appThreadID = nil
 end
 local function runApp(path, name)
+    if appThreadID then
+        exitApp(appThreadID)
+    end
     appWindow.setVisible(true)
     appWindow.redraw()
     gui.newButton("exitBtn", 49, 1, "X", colors.red, exitApp)
