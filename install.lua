@@ -37,7 +37,7 @@ os.loadAPI("/.temp/gui.lua")
 gui.init()
 gui.setBGColor(colors.white)
 gui.newLabel("mainLabel", 1, 1, "ZheOS 1.0.0 Setup", colors.lightGray)
-gui.newButton("installBtn", 2, 3, "Install", colors.lime, install)
+gui.newButton("installBtn", 26, 10, "Install", colors.lime, install)
 gui.mainLoop()
 
 fs.delete("/.temp")
