@@ -37,13 +37,7 @@ function redraw()
 	for k,v in pairs(texts) do
 		term.setCursorPos(v.x, v.y)
 		term.setTextColor(colors.black)
-		term.write((function()
-			local str = ""
-			for i=1, v.width do
-				str = str.." "
-			end
-			return str
-		end)())
+		term.write(string.rep(" ", v.width))
 		term.setCursorPos(v.x, v.y)
 		term.write(v.text)
 	end
@@ -55,13 +49,9 @@ function redraw()
 		local empty = (v.width)-filled
 		term.setCursorPos(v.x, v.y)
 		term.setBackgroundColor(v.fg)
-		for i=1, filled do
-			term.write(" ")
-		end
+		term.write(string.rep(" ", filled))
 		term.setBackgroundColor(colors.lightGray)
-		for i=1, empty do
-			term.write(" ")
-		end
+		term.write(string.rep(" ", empty))
 	end
 end
 

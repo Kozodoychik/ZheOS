@@ -213,6 +213,8 @@ function bootMenu()
     term.clear()
     term.setCursorPos(1,1)
     if config.labels[bootTo] == "CraftOS" then
+        term.setBackgroundColor(colors.black)
+        term.clear()
         shell.run("/rom/programs/shell.lua")
     end
     print('mounting system...')
