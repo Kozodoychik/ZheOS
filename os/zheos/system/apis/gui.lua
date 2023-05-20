@@ -70,6 +70,7 @@ function init()
 end
 
 function exit()
+	local windows = nil
 	os.queueEvent("stopGUI")
 end
 
