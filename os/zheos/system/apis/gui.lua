@@ -2,6 +2,7 @@ local buttons = {}
 local labels = {}
 local texts = {}
 local progressBars = {}
+local rects = {}
 local currentText = nil
 local bgColor = colors.black
 
@@ -17,6 +18,10 @@ function redraw()
 	term.setBackgroundColor(bgColor)
 	term.clear()
 	
+	for k,v in pairs(rects) do
+		paintutils.drawFilledBox(v.x, v.y, v.x+v.w, v.y+v.h, v.color)
+	end
+
 	for k,v in pairs(buttons) do
 		term.setCursorPos(v.x, v.y)
 		term.setTextColor(colors.white)
@@ -126,6 +131,17 @@ function newProgressBar(id, x, y, width, fg, bg, progress)
 	else
 		error(id.." progressbar already exists")
 	end
+end
+
+function newRect(id, x, y, width, height, color)
+	local rect = {
+		x=x,
+		y=y,
+		w=width,
+		h=height,
+		color=color
+	}
+	rects[id] = rect
 end
 
 function getButtonProperty(id, prop)
