@@ -28,8 +28,8 @@ end
 
 local function install()
 	gui.destroyButton("installBtn")
-	gui.newProgressBar("progress", 2, 10, 49, colors.lime, 0)
-	gui.newLabel("file", 2, 9, "", colors.lightGray)
+	gui.newProgressBar("progress", 2, 10, 49, colors.lightBlue, colors.gray, 0)
+	gui.newLabel("file", 2, 9, "", colors.gray)
 	for key, v in ipairs(filesToDownload) do
 		gui.setLabelProperty("file", "text", v)
 		download(v)

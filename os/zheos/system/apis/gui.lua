@@ -50,7 +50,7 @@ function redraw()
 		term.setCursorPos(v.x, v.y)
 		term.setBackgroundColor(v.fg)
 		term.write(string.rep(" ", filled))
-		term.setBackgroundColor(colors.lightGray)
+		term.setBackgroundColor(v.bg)
 		term.write(string.rep(" ", empty))
 	end
 end
@@ -112,12 +112,13 @@ function newText(id, x, y, width)
 	end
 end
 
-function newProgressBar(id, x, y, width, fg, progress)
+function newProgressBar(id, x, y, width, fg, bg, progress)
 	local progress = {
 		x=x,
 		y=y,
 		width=width,
 		fg=fg,
+		bg=bg,
 		progress=progress
 	}
 	if progressBars[id] == nil then
