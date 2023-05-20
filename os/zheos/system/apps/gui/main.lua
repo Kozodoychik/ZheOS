@@ -10,6 +10,7 @@ local function exitApp()
     gui.setLabelProperty("appNameLabel", "text", "")
     gui.setWindowProperty("appWindow", "name", "")
     gui.destroyButton("exitBtn")
+    appWindow.clear()
 end
 local function runApp(path, name)
     appWindow.setVisible(true)

@@ -265,9 +265,6 @@ function mainLoop()
 					texts[currentText].text = string.sub(texts[currentText].text, 0, #texts[currentText].text-1)
 				end
 			end
-		elseif event == "mouse_drag" then
-			coroutine.yield(event, p1, p2, p3-2)
 		end
-		coroutine.yield(event, p1, p2, p3)
 	end
 end
