@@ -28,6 +28,7 @@ end
 
 local function install()
 	gui.destroyButton("installBtn")
+	gui.destroyButton("exitBtn")
 	gui.newProgressBar("progress", 2, 10, 49, colors.lightBlue, colors.gray, 0)
 	gui.newLabel("file", 2, 9, "", colors.gray)
 	for key, v in ipairs(filesToDownload) do
@@ -58,8 +59,8 @@ preLoad()
 gui.init()
 gui.setBGColor(colors.lightGray)
 gui.newLabel("mainLabel", 1, 1, "ZheOS 1.0.0 Setup", colors.gray)
-gui.newButton("installBtn", 21, 8, "Install", colors.lightBlue, install)
-gui.newButton("exitBtn", 22, 10, "Exit", colors.lightBlue, os.reboot)
+gui.newButton("installBtn", 21, 11, "Install", colors.lightBlue, install)
+gui.newButton("exitBtn", 2, 18, "Exit", colors.lightBlue, os.reboot)
 gui.mainLoop()
 makeDirs()
 createConfig()
