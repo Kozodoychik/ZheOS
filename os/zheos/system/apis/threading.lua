@@ -29,6 +29,7 @@ function run()
 			--term.redirect(term.native())
 			if not ok then
 				printError("thread error: "..msg)
+				coroutines[i] = nil
 				break
 			end
 		end
