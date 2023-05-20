@@ -3,6 +3,7 @@ local labels = {}
 local texts = {}
 local progressBars = {}
 local rects = {}
+local windows = {}
 local currentText = nil
 local bgColor = colors.black
 
@@ -18,6 +19,10 @@ function redraw()
 	term.setBackgroundColor(bgColor)
 	term.clear()
 	
+	for k,v in pairs(windows) do
+		v.win.redraw()
+	end
+	term.setCursorBlink(false)
 	for k,v in pairs(rects) do
 		paintutils.drawFilledBox(v.x, v.y, v.x+v.w, v.y+v.h, v.color)
 	end
@@ -28,10 +33,9 @@ function redraw()
 		term.setBackgroundColor(v.bg)
 		term.write(" "..v.label.." ")
 	end
-
-	term.setBackgroundColor(bgColor)
 	
 	for k,v in pairs(labels) do
+		term.setBackgroundColor(v.bg)
 		term.setCursorPos(v.x, v.y)
 		term.setTextColor(v.fg)
 		term.write(v.text)
@@ -89,11 +93,13 @@ function newButton(id, x, y, label, bg, handler)
 	end
 end
 
-function newLabel(id, x, y, text, fg)
+function newLabel(id, x, y, text, fg, ...)
+	local args = {...}
 	local label = {
 		x=x,
 		y=y,
 		fg=fg,
+		bg=args[1] or bgColor,
 		text=text
 	}
 	if labels[id] == nil then
@@ -142,6 +148,24 @@ function newRect(id, x, y, width, height, color)
 		color=color
 	}
 	rects[id] = rect
+end
+
+function newWindow(id, name, visible)
+	local win = {
+		name=name,
+		win=window.create(term.native(), 1, 2, 51, 17, visible)
+	}
+	windows[id] = win
+	windows[id].win.redraw()
+	return windows[id].win
+end
+
+function getWindowProperty(id, prop)
+	return windows[id][prop]
+end
+
+function setWindowProperty(id, prop, value)
+	windows[id][prop] = value
 end
 
 function getButtonProperty(id, prop)
@@ -240,6 +264,9 @@ function mainLoop()
 					texts[currentText].text = string.sub(texts[currentText].text, 0, #texts[currentText].text-1)
 				end
 			end
+		elseif event == "mouse_drag" then
+			coroutine.yield(event, p1, p2, p3-2)
 		end
+		coroutine.yield(event, p1, p2, p3)
 	end
 end
