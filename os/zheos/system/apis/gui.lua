@@ -252,7 +252,7 @@ function Layout:new()
 					for k,v in pairs(prop.texts) do
 						if p3 == v.y and p2 >= v.x and p2 < (v.x+v.width) then
 							prop.currentText = k
-							prop.focusOnText(k)
+							prop:focusOnText(k)
 							break
 						else
 							term.setCursorBlink(false)
