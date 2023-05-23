@@ -1,4 +1,7 @@
 local coroutines = {}
+local function onError()
+	return
+end
 function start(window, ...)
 	local threads = table.pack(...)
 	local cor = nil
@@ -20,6 +23,9 @@ function run()
 			if event[1] == "terminate" then
 				break
 			end
+			if coroutines[i] == nil then
+				break
+			end
 			if coroutine.status(coroutines[i].cor) == "dead" then
 				coroutines[i] = nil
 				break
@@ -29,12 +35,18 @@ function run()
 			--term.redirect(term.native())
 			if not ok then
 				printError("thread error: "..msg)
-				coroutines[i] = nil
+				--coroutines[i] = nil
+				onError()
 				break
 			end
 		end
 	end
 end
+function setUpOnError(func)
+	onError = func
+end
 function stopThread(tID)
-	coroutine.resume(coroutines[tID].cor, "terminate")
+	if coroutines[tID] then
+		coroutines[tID] = nil
+	end
 end
