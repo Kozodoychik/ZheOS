@@ -1,5 +1,6 @@
 os.loadAPI("apis/registry.lua")
 os.loadAPI("apis/gui.lua")
+os.pullEvent = os.pullEventRaw
 local newUserLayout = gui.Layout:new()
 local function firstBootOkHandler()
 	local passw = newUserLayout:getTextProperty("passwText", "text")

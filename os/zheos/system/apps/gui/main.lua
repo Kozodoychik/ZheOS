@@ -23,6 +23,7 @@ local function runApp(path, name)
         exitApp(appThreadID)
     end
     threading.setUpOnError(exitApp)
+    threading.setUpOnStop(exitApp)
     appWindow.setVisible(true)
     appWindow.redraw()
     mainLayout:newButton("exitBtn", 49, 1, "X", colors.red, exitApp)
