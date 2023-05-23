@@ -222,6 +222,10 @@ function Layout:new()
 		prop.progressBars[id] = nil
 	end
 
+	function gui:dontTerminate(bool)
+		prop.dontTerminate = bool
+	end
+
 	function gui:mainLoop()
 		while true do
 			gui:redraw()
