@@ -44,9 +44,6 @@ end
 local function makeDirs()
 	fs.delete("/.temp")
 	fs.makeDir("/zheos/user")
-	fs.makeDir("/zheos/system/user")
-	fs.makeDir("/zheos/system/rom")
-	fs.makeDir("/zheos/recovery/rom")
 end
 
 local function createConfig()
