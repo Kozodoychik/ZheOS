@@ -9,6 +9,7 @@ function Layout:new()
 	prop.rects = {}
 	prop.windows = {}
 	prop.currentText = nil
+	prop.dontTerminate = false
 	prop.bgColor = colors.black
 
 	function prop:focusOnText(id)
@@ -229,17 +230,19 @@ function Layout:new()
 			end
 			local event, p1, p2, p3 = os.pullEventRaw()
 			if event == "stopGUI" or event == "terminate" then
-				prop.buttons = {}
-				prop.labels = {}
-				prop.texts = {}
-				prop.rects = {}
-				prop.progressBars = {}
-				prop.windows = {}
-				term.setBackgroundColor(colors.black)
-				term.setTextColor(colors.white)
-				term.setCursorPos(1,1)
-				term.clear()
-				term.setCursorBlink(true)
+				if not prop.dontTerminate then
+					prop.buttons = {}
+					prop.labels = {}
+					prop.texts = {}
+					prop.rects = {}
+					prop.progressBars = {}
+					prop.windows = {}
+					term.setBackgroundColor(colors.black)
+					term.setTextColor(colors.white)
+					term.setCursorPos(1,1)
+					term.clear()
+					term.setCursorBlink(true)
+				end
 				return
 			elseif event == "mouse_click" then
 				if p1 == 1 then
