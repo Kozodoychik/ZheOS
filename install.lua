@@ -4,7 +4,6 @@ local filesToDownload = {
 	"zheos/system/apis/registry.lua",
 	"zheos/system/apis/threading.lua",
 	"zheos/system/apis/gui.lua",
-	"zheos/system/apps/pkg/main.lua",
 	"zheos/system/apps/gui/main.lua",
 	"zheos/system/apps/about/main.lua",
 	"zheos/system/utils/makeimg.lua",
@@ -51,7 +50,7 @@ local function makeDirs()
 end
 
 local function createConfig()
-	local cfg = {default=1,loadPaths={"/zheos/system/","/zheos/recovery/","/"},labels={"ZheOS Init","Recovery","CraftOS"}}
+	local cfg = {default=1,loadPaths={"/zheos/system/kernel.lua","/zheos/recovery/init.lua","/rom/programs/shell.lua"},labels={"ZheOS Init","Recovery","CraftOS"}}
 	local cfgFile = fs.open("/zhestartup.cfg","w")
 	cfgFile.write(textutils.serialize(cfg))
 	cfgFile.close()

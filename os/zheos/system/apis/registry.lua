@@ -1,4 +1,4 @@
-local regpath = '.registry'
+local regpath = 'zheos/system/.registry'
 local function getKeyFromPath(path)
     local node = _G['reg']
     for k,v in ipairs(path) do

@@ -1,6 +1,3 @@
-os.loadAPI("apis/mainLayout:lua")
-os.loadAPI("apis/threading.lua")
-os.startTimer(0.01)
 local appThreadID = nil
 local startMenuVisible = false
 local mainLayout = gui.Layout:new()
@@ -49,7 +46,7 @@ local function showStartMenu()
         end)
         mainLayout:newButton("aboutBtn", 1, 16, "[  About  ]", colors.lightBlue, function()
             showStartMenu()
-            runApp("apps/about/main.lua", "About ZheOS")
+            runApp("zheos/system/apps/about/main.lua", "About ZheOS")
         end)
         startMenuVisible = true
     end

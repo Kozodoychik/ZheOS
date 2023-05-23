@@ -1,4 +1,3 @@
-os.loadAPI("apis/registry.lua")
 local systemVersion = registry.readKey("system", "systemVersion")
 local layout = gui.Layout:new()
 layout:init()
