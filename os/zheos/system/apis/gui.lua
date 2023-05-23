@@ -234,7 +234,7 @@ function Layout:new()
 			end
 			local event, p1, p2, p3 = os.pullEventRaw()
 			if event == "stopGUI" or event == "terminate" then
-				if not prop.dontTerminate then
+				if not prop.dontTerminate and event == "terminate" then
 					prop.buttons = {}
 					prop.labels = {}
 					prop.texts = {}
