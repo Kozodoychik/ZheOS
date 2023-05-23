@@ -26,7 +26,7 @@ local function download(filename)
 	file.write(req.readAll())
 	file.close()
 end
-local layout = layout:Layout:new()
+local layout = gui.Layout:new()
 local function install()
 	layout:destroyButton("installBtn")
 	layout:destroyButton("exitBtn")
