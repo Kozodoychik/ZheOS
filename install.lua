@@ -19,7 +19,7 @@ local function preLoad()
 	file.close()
 	os.loadAPI("/.temp/gui.lua")
 end
-
+preLoad()
 local function download(filename)
 	local req = http.get("https://raw.githubusercontent.com/Kozodoychik/ZheOS/1.0.0/os/"..filename)
 	local file = fs.open("/"..filename,"w")
@@ -56,7 +56,6 @@ local function createConfig()
 	cfgFile.close()
 end
 
-preLoad()
 layout:init()
 layout:setBGColor(colors.lightGray)
 layout:newLabel("mainLabel", 1, 1, "ZheOS 1.0.0 Setup", colors.gray)
