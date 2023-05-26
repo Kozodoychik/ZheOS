@@ -8,6 +8,7 @@ function Layout:new()
 	prop.progressBars = {}
 	prop.rects = {}
 	prop.windows = {}
+	prop.switches = {}
 	prop.currentText = nil
 	prop.dontTerminate = false
 	prop.bgColor = colors.black
@@ -23,7 +24,6 @@ function Layout:new()
 	function gui:redraw()
 		term.setBackgroundColor(prop.bgColor)
 		term.clear()
-		
 		for k,v in pairs(prop.windows) do
 			v.win.redraw()
 		end
@@ -31,7 +31,7 @@ function Layout:new()
 		for k,v in pairs(prop.rects) do
 			paintutils.drawFilledBox(v.x, v.y, v.x+v.w, v.y+v.h, v.color)
 		end
-
+		
 		for k,v in pairs(prop.buttons) do
 			term.setCursorPos(v.x, v.y)
 			term.setTextColor(colors.white)
@@ -64,6 +64,22 @@ function Layout:new()
 			term.write(string.rep(" ", filled))
 			term.setBackgroundColor(v.bg)
 			term.write(string.rep(" ", empty))
+		end
+		for k,v in pairs(prop.switches) do
+			term.setCursorPos(v.x, v.y)
+			if v.value then
+				term.setBackgroundColour(colors.blue)
+				term.setTextColor(colors.lightBlue)
+				term.write("1")
+				term.setBackgroundColour(colors.lightBlue)
+				term.write("  ")
+			else
+				term.setBackgroundColour(colors.lightGray)
+				term.setTextColor(colors.lightGray)
+				term.write("  ")
+				term.setBackgroundColour(colors.gray)
+				term.write("0")
+			end
 		end
 	end
 
@@ -153,14 +169,27 @@ function Layout:new()
 		prop.rects[id] = rect
 	end
 
-	function gui:newWindow(id, name, visible)
+	function gui:newWindow(id, name, x, y, endX, endY, visible)
 		local win = {
 			name=name,
-			win=window.create(term.native(), 1, 2, 51, 17, visible)
+			win=window.create(term.native(), x, y, endX, endY, visible)
 		}
 		prop.windows[id] = win
 		prop.windows[id].win.redraw()
 		return prop.windows[id].win
+	end
+
+	function gui:newSwitch(id, x, y, value)
+		local switch = {
+			x=x,
+			y=y,
+			value=value
+		}
+		if prop.switches[id] == nil then
+			prop.switches[id] = switch
+		else
+			error(id.." switch already exists")
+		end
 	end
 
 	function gui:getWindowProperty(id, proper)
@@ -169,6 +198,14 @@ function Layout:new()
 
 	function gui:setWindowProperty(id, proper, value)
 		prop.windows[id][proper] = value
+	end
+
+	function gui:getSwitchProperty(id, proper)
+		return prop.switches[id][proper]
+	end
+
+	function gui:setSwitchProperty(id, proper, value)
+		prop.switches[id][proper] = value
 	end
 
 	function gui:getButtonProperty(id, proper)
@@ -232,7 +269,7 @@ function Layout:new()
 			if prop.currentText then
 				prop:focusOnText(prop.currentText)
 			end
-			local event, p1, p2, p3 = os.pullEventRaw()
+			local event, p1, p2, p3 = os.pullEvent()
 			if (event == "stopGUI") or (not prop.dontTerminate and event == "terminate") then
 				prop.buttons = {}
 				prop.labels = {}
@@ -262,6 +299,11 @@ function Layout:new()
 						else
 							term.setCursorBlink(false)
 							prop.currentText = nil
+						end
+					end
+					for k,v in pairs(prop.switches) do
+						if p3 == v.y and p2 >= v.x and p2 < v.x+3 then
+							v.value = not v.value
 						end
 					end
 				end

@@ -35,13 +35,20 @@ function run()
 				onStop()
 				break
 			end
+			if (event[1] == "mouse_click" or event[1] == "mouse_drag") and coroutines[i].win.getPosition then
+				local x,y = coroutines[i].win.getPosition()
+				event[3] = event[3] - (x - 1)
+				event[4] = event[4] - (y - 1)
+			end
 			term.redirect(coroutines[i].win)
-			local ok, msg = coroutine.resume(coroutines[i].cor, table.unpack(event))
+			local ok, msg, p1, p2, p3 = coroutine.resume(coroutines[i].cor, table.unpack(event))
 			--term.redirect(term.native())
 			if not ok then
-				printError("thread error: "..msg)
+				term.redirect(term.native())
+				error("thread error: "..msg)
 				--coroutines[i] = nil
-				onError()
+				--onError()
+				os.pullEvent("key")
 				break
 			end
 		end

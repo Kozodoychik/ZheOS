@@ -1,7 +1,27 @@
+function panic(msg)
+	term.setBackgroundColor(colors.white)
+	term.setCursorPos(1, 1)
+	term.clear()
+	paintutils.drawFilledBox(1, 1, 51, 3, colors.red)
+	term.setTextColor(colors.white)
+	term.setBackgroundColor(colors.red)
+	term.setCursorPos(20, 2)
+	term.write("ZheOS Crash")
+	term.setTextColor(colors.red)
+	term.setBackgroundColor(colors.white)
+	term.setCursorPos(2, 5)
+	term.write(msg)
+	term.setCursorPos(2, 7)
+	term.setTextColor(colors.black)
+	term.write("Press any key to reboot")
+	os.pullEvent("key")
+	os.reboot()
+end
 local function kernelMain()
-	os.loadAPI("zheos/system/apis/registry.lua")
-	os.loadAPI("zheos/system/apis/gui.lua")
-	os.loadAPI("zheos/system/apis/threading.lua")
+	for k,v in ipairs(fs.list("zheos/system/apis")) do
+		print("Loading API - "..v)
+		os.loadAPI("/zheos/system/apis/"..v)
+	end
 	os.startTimer(0.01)
 	os.pullEvent = os.pullEventRaw
 	local newUserLayout = gui.Layout:new()
@@ -31,6 +51,10 @@ local function kernelMain()
 	if not fs.exists("zheos/system/.registry") then
 		registry.createRegistry()
 		registry.createKey("1.0.0", "system","systemVersion")
+		registry.saveRegistry()
+	end
+	registry.loadRegistry()
+	if not registry.keyExists("user") then
 		newUserLayout:init()
 		newUserLayout:dontTerminate(true)
 		newUserLayout:setBGColor(colors.lightGray)
@@ -47,30 +71,9 @@ local function kernelMain()
 		registry.saveRegistry()
 	end
 	registry.loadRegistry()
-	if fs.exists("zheos/system/apps/gui/main.lua") then
-		shell.run("zheos/system/apps/gui/main.lua")
-	else
-		print("No GUI app. Starting CraftOS...")
-		shell.run("rom/programs/shell.lua")
-	end
+	shell.run("zheos/system/apps/gui/main.lua")
 end
 local ok, msg = pcall(kernelMain)
 if not ok then
-	term.setBackgroundColor(colors.white)
-	term.setCursorPos(1, 1)
-	term.clear()
-	paintutils.drawFilledBox(1, 1, 51, 3, colors.red)
-	term.setTextColor(colors.white)
-	term.setBackgroundColor(colors.red)
-	term.setCursorPos(20, 2)
-	term.write("ZheOS Crash")
-	term.setTextColor(colors.red)
-	term.setBackgroundColor(colors.white)
-	term.setCursorPos(2, 5)
-	term.write(msg)
-	term.setCursorPos(2, 7)
-	term.setTextColor(colors.black)
-	term.write("Press any key to reboot")
-	os.pullEvent("key")
-	os.reboot()
+	panic(msg)
 end

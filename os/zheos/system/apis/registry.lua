@@ -22,7 +22,18 @@ local function createKeyFromPath(t, value, path)
       end
       node = node[v]
     end
-  end
+end
+function keyExists(...)
+    local node = _G['reg']
+    local path = table.pack(...)
+    for k,v in ipairs(path) do
+        node = node[v]
+        if node == nil then
+            return false
+        end
+    end
+    return true
+end
 function saveRegistry()
     file = fs.open(regpath, "w")
     file.write(textutils.serialise(_G['reg']))
