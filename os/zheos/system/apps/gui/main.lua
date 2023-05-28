@@ -101,6 +101,8 @@ _G.os.setWindowLabel = function(label)
     os.queueEvent("timer")
 end
 _G.os.notify = function(header, text)
+    local currentTerm = term.current()
+    term.redirect(term.native())
     notifyLayout:setLabelProperty("header", "text", header)
     notifyLayout:setLabelProperty("text", "text", text)
     notifyWindow.setVisible(true)
@@ -120,6 +122,7 @@ _G.os.notify = function(header, text)
         os.sleep(0.005)
     end
     notifyWindow.setVisible(false)
+    term.redirect(currentTerm)
 end
 mainLayout:init()
 mainLayout:setBGColor(colors.lightGray)
