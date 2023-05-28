@@ -48,6 +48,7 @@ local function kernelMain()
 	term.setCursorPos(1,1)
 	shell.setAlias("makeimg","/zheos/system/utils/makeimg.lua")
 	shell.setAlias("cat","/zheos/system/utils/cat.lua")
+	shell.setAlias("rletool","/zheos/system/utils/rletool.lua")
 	if not fs.exists("zheos/system/.registry") then
 		registry.createRegistry()
 		registry.createKey("1.0.0", "system","systemVersion")
@@ -75,5 +76,5 @@ local function kernelMain()
 end
 local ok, msg = pcall(kernelMain)
 if not ok then
-	panic(msg)
+	--panic(msg)
 end

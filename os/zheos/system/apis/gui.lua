@@ -2,6 +2,24 @@ Layout = {}
 function Layout:new()
 	local gui = {}
 	local prop = {}
+	local blitColors = {
+		["0"] = colors.white,
+		["1"] = colors.orange,
+		["2"] = colors.magenta,
+		["3"] = colors.lightBlue,
+		["4"] = colors.yellow,
+		["5"] = colors.lime,
+		["6"] = colors.pink,
+		["7"] = colors.gray,
+		["8"] = colors.lightGray,
+		["9"] = colors.cyan,
+		a = colors.purple,
+		b = colors.blue,
+		c = colors.brown,
+		d = colors.green,
+		e = colors.red,
+		f = colors.black
+	}
 	prop.buttons = {}
 	prop.labels = {}
 	prop.texts = {}
@@ -9,6 +27,7 @@ function Layout:new()
 	prop.rects = {}
 	prop.windows = {}
 	prop.switches = {}
+	prop.images = {}
 	prop.currentText = nil
 	prop.dontTerminate = false
 	prop.bgColor = colors.black
@@ -24,14 +43,46 @@ function Layout:new()
 	function gui:redraw()
 		term.setBackgroundColor(prop.bgColor)
 		term.clear()
+
+		for k,v in pairs(prop.images) do
+			local y = v.y
+			for line in string.gmatch(v.data, "([^\n]+)") do
+				if v.isNFT then
+					term.setCursorPos(v.x, y)
+					local i = 0
+					repeat
+						i = i + 1
+						local char = string.sub(line, i, i)
+						if char == "@" or char == "\30" then
+							local color = string.sub(line, i+1, i+1)
+							term.setBackgroundColor(blitColors[color])
+							i = i + 1
+						elseif char == "#" or char == "\31" then
+							local color = string.sub(line, i+1, i+1)
+							term.setTextColor(blitColors[color])
+							i = i + 1
+						else
+							term.write(char)
+						end
+					until i >= #line
+				else
+					term.setCursorPos(v.x, y)
+					term.blit(string.rep(" ", #line), string.rep(" ", #line), line)
+				end
+				y = y + 1
+			end
+		end
+
 		for k,v in pairs(prop.windows) do
 			v.win.redraw()
 		end
+
 		term.setCursorBlink(false)
+		
 		for k,v in pairs(prop.rects) do
 			paintutils.drawFilledBox(v.x, v.y, v.x+v.w, v.y+v.h, v.color)
 		end
-		
+
 		for k,v in pairs(prop.buttons) do
 			term.setCursorPos(v.x, v.y)
 			term.setTextColor(colors.white)
@@ -155,6 +206,28 @@ function Layout:new()
 			prop.progressBars[id] = progress
 		else
 			error(id.." progressbar already exists")
+		end
+	end
+
+	function gui:newImage(id, x, y, width, height, path, isNFT, isCompressed)
+		local file = fs.open(path, "r")
+		local data = file.readAll()
+		file.close()
+		if isCompressed then
+			data = rle.decompress(data)
+		end
+		local image = {
+			x=x,
+			y=y,
+			width=width,
+			height=height,
+			isNFT=isNFT,
+			data=data
+		}
+		if prop.images[id] == nil then
+			prop.images[id] = image
+		else
+			error(id.." image already exists")
 		end
 	end
 

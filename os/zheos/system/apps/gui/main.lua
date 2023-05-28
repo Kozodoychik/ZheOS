@@ -2,6 +2,15 @@ local appThreadID = nil
 local startMenuVisible = false
 local mainLayout = gui.Layout:new()
 local appWindow = mainLayout:newWindow("appWindow", "", 1, 2, 51, 17, false)
+local notifyWindow = mainLayout:newWindow("notifyWindow", "", 51, 13, 20, 5, false)
+term.redirect(notifyWindow)
+local notifyLayout = gui.Layout:new()
+notifyLayout:init()
+notifyLayout:setBGColor(colors.white)
+notifyLayout:newRect("headerRect", 1, 1, 20, 0, colors.gray)
+notifyLayout:newLabel("header", 1, 1, "Header", colors.white, colors.gray)
+notifyLayout:newLabel("text", 2, 3, "Text", colors.black, colors.white)
+term.redirect(term.native())
 local function clearWindow()
     appWindow.setVisible(false)
     mainLayout:setLabelProperty("appNameLabel", "text", "")
@@ -78,16 +87,48 @@ local function showStartMenu()
         startMenuVisible = true
     end
 end
+local function peripheralNotification()
+    while true do
+        local event, side = os.pullEvent("peripheral")
+        os.notify("New peripheral on the "..side, peripheral.getType(side).." has been attached")
+    end
+end
 _G.os.setWindowLabel = function(label)
     mainLayout:setLabelProperty("appNameLabel", "text", label)
     mainLayout:setWindowProperty("appWindow", "name", label)
     os.queueEvent("timer")
 end
+_G.os.notify = function(header, text)
+    notifyLayout:setLabelProperty("header", "text", header)
+    notifyLayout:setLabelProperty("text", "text", text)
+    notifyWindow.setVisible(true)
+    for i=1,20 do
+        notifyWindow.reposition(51-i, 13)
+        os.queueEvent("timer")
+        mainLayout:redraw()
+        os.sleep(0.005)
+    end
+    for i=0,1 do
+        coroutine.yield()
+    end
+    for i=1,20 do
+        notifyWindow.reposition(31+i, 13)
+        os.queueEvent("timer")
+        mainLayout:redraw()
+        os.sleep(0.005)
+    end
+    notifyWindow.setVisible(false)
+end
 mainLayout:init()
 mainLayout:setBGColor(colors.lightGray)
 mainLayout:newRect("rect", 1, 19, 51, 0, colors.gray)
 mainLayout:newRect("rect2", 1, 1, 51, 0, colors.gray)
+--mainLayout:newImage("test", 3, 3, 5, 4, "/zheos/system/res/folder.nft", true, false)
 mainLayout:newButton("startMenuBtn", 1, 19, ">", colors.lightBlue, showStartMenu)
+mainLayout:newButton("testBtn", 1, 3, "Test notify", colors.lightBlue, function()
+    os.notify("Test", "Hello!")
+end)
 mainLayout:newLabel("appNameLabel", 1, 1, "", colors.white, colors.gray)
 threading.start(term.native(), mainLayout.mainLoop)
+threading.start(notifyWindow, notifyLayout.mainLoop)
 threading.run()
