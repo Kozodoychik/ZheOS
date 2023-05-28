@@ -42,7 +42,7 @@ function run()
 			end
 			term.redirect(coroutines[i].win)
 			local ok, msg, p1, p2, p3 = coroutine.resume(coroutines[i].cor, table.unpack(event))
-			--term.redirect(term.native())
+			term.redirect(term.native())
 			if not ok then
 				term.redirect(term.native())
 				error("thread error: "..msg)
