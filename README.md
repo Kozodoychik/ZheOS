@@ -1,2 +1,2 @@
 # ZheOS
-OS for Computercraft
+Недосистема для компьютеров мода Computercraft
